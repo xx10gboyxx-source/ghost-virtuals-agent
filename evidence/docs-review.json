@@ -1,0 +1,46 @@
+{
+  "reviewDate": "2026-10-14",
+  "sourceCommit": "75a0ddf98c9abfef639689d511570319ec060b9e",
+  "sourceScope": "Reviewed production source; this documentation change does not alter trading behavior.",
+  "nodeVersion": "v24.19.0",
+  "tests": {
+    "command": "npm test",
+    "total": 136,
+    "passed": 136,
+    "failed": 0,
+    "scope": "Research, simulation, ACP fixtures and reporting; no test imports live/."
+  },
+  "evaluations": [
+    {
+      "command": "node agent/task.mjs --evaluate",
+      "cases": 10,
+      "passed": 10,
+      "failed": 0,
+      "liveProviderCalls": 0
+    },
+    {
+      "command": "node examples/evaluate-meme.mjs",
+      "cases": 10,
+      "passed": 10,
+      "failed": 0,
+      "liveProviderCalls": 0
+    }
+  ],
+  "liveExecutor": {
+    "implementationPresent": true,
+    "publishedAutomatedTests": false,
+    "fundedMainnetExecutionVerified": false,
+    "forkEndToEndExecutionVerified": false,
+    "independentSecurityAuditEstablished": false
+  },
+  "portal": {
+    "url": "https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/",
+    "httpStatus": 200,
+    "scope": "HTML reachability only; no scan API, sustained uptime, customer, wallet or trading validation."
+  },
+  "hostedCustomerTradingVerified": false,
+  "authenticatedAcpDeliveryVerified": false,
+  "inferenceProviderQualityMeasured": false,
+  "profitabilityMeasured": false,
+  "creditApprovalEstablished": false
+}

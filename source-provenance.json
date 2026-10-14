@@ -12,5 +12,8 @@
     "server/polymarket-crypto-engine.mjs": "19d108125a15c382c304d5cce678ae8419eb1ab457943cb91f3c28230f3b9485",
     "server/polymarket-us-feed.mjs": "5e6ea8ae64af59e690055805ea6bd380b8b2467a587adf226040ecd1400cc926"
   },
-  "historicalModulesActive": false
+  "historicalModulesActive": false,
+  "recordScope": "historical source import; original status is retained, not a current deployment claim",
+  "runtimeStatusScope": "the historical source snapshot only",
+  "currentStatusDocument": "docs/READINESS.md"
 }

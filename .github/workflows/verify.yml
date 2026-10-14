@@ -14,4 +14,5 @@ jobs:
       - run: npm test
       - run: npm run evaluate
       - run: npm run check:public
+      - run: npm run check:docs
       - run: node examples/demo.mjs > /tmp/ghost-demo.json
