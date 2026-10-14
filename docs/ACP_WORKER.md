@@ -16,7 +16,7 @@ has been verified. Keep the offering hidden until a controlled integration test
 and host restart test pass.
 
 On 2026-10-14 the Virtuals Console payment review showed monthly hosting of
-**20 USDC**, agent wallet **0.00 USDC**, and a **20.00 USDC shortfall**. No payment
+**20 USDC** per month. No payment
 was made. Console runtime compatibility (Node 24, persistent disk, native CLI
 keychain and supervision) still needs verification on an actual instance.
 Inference credits do not establish that hosting or job delivery is active.

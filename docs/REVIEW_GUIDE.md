@@ -15,8 +15,8 @@ npm run evaluate
 npm run check:public
 ```
 
-59 automated tests pass: 15 feed, 11 strategy, 11 operator, 9 reporter and 13
-research-task tests. The evaluation has 20 declared synthetic cases. Tests use
+103 automated tests pass, covering feed, strategy, simulation recovery, ACP jobs,
+readiness, reporting and research tasks. The evaluation has 20 declared synthetic cases. Tests use
 synthetic responses; no live-provider quality or investment performance is measured.
 
 | Capability | Implementation | Evidence |
@@ -59,5 +59,7 @@ We request discretionary/manual review of this implementation.
 - [GoPlus response meanings](https://docs.gopluslabs.io/reference/response-details)
 - [Virtuals Compute](https://os.virtuals.io/agent-identity/compute/overview)
 
-Contracts inspected 2026-10-14; real endpoint integration remains unverified for
-this package. No provider field, test score or screen is an investment endorsement.
+Contracts inspected 2026-10-14. A bounded live-feed probe is recorded in
+[HOSTING.md](HOSTING.md); hosted delivery and trading remain unverified. The
+[readiness audit](READINESS.md) records fixes and blocking gaps. No provider field,
+test score or screen is an investment endorsement.

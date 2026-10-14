@@ -9,7 +9,7 @@ Public source: https://github.com/xx10gboyxx-source/ghost-virtuals-agent
 Project: https://app.virtuals.io/virtuals/143409
 Reviewer guide: docs/REVIEW_GUIDE.md
 
-The release includes 59 passing automated tests and 20 synthetic evaluation cases.
+The release includes 103 passing automated tests and 20 synthetic evaluation cases.
 It replaces the previously active BTC outcome-contract strategy. Requested credits
 will support real Virtuals-model evaluation of evidence fidelity, uncertainty,
 latency and credit consumption. No live-money execution, hosted runtime,

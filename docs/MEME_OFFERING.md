@@ -1,10 +1,24 @@
 # GhOsT Base meme scan offering
 
+**Base meme market intelligence for traders, research teams and agent workflows.**
+Screen one selected pool, compare an explicit strategy and inspect the evidence
+behind the result. See the [business overview](BUSINESS_OVERVIEW.md).
+
 The EconomyOS job definition is `ghost_base_meme_scan`. It replaces the old
 `ghost_base_trade_scan` description. The obsolete public `ghost_web_scraper`
 offering is hidden. The meme scan is also hidden while no hosted ACP worker is
 available. Its configured price remains $0.01 with a 10-minute SLA and no principal
 funds required; this is staged configuration, not a live service or billing claim.
+
+## Marketplace description
+
+Research a caller-selected Base meme-coin pool using closed 5-minute candles,
+volume-breakout or trend-pullback rules, liquidity and token-risk checks. Receive
+a structured JSON report with PASS/WAIT/BLOCKED, reasons, observation timestamps,
+pool/token identity and an illustrative setup when eligible. Designed for
+traders, research teams and agent workflows. Requires a full Base pool contract
+address; no trading funds or wallet access requested. Research only: no swaps,
+custody or guaranteed returns. Pilot staged; hosted delivery is not yet active.
 
 ## Runnable research command
 

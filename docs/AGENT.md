@@ -16,7 +16,11 @@ missing sell evidence leaves the position unresolved. No real orders are possibl
 Research tasks inspect sanitized recorded data through two fixed local tools.
 Optional Virtuals output must cite known evidence IDs, and cannot change the
 assessment. Correct citation IDs do not establish semantic accuracy. The agent
-is a constrained workflow, not a general autonomous planner or hosted ACP service.
+is a constrained workflow. A separate persistent ACP worker serves the bounded
+`ghost_base_meme_scan` request through an externally authenticated official CLI.
+Its local lifecycle tests pass; hosted delivery and settlement are unverified.
+That worker can sign provider actions through the CLI when configured, but does
+not execute token swaps. See [ACP_WORKER.md](ACP_WORKER.md).
 
 See the README for experimental thresholds and operational limitations, and the
 reviewer guide for commands that reproduce each capability.

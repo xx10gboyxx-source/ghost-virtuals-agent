@@ -20,9 +20,10 @@ for the deterministic simulation below.
   [the recorded evidence](../evidence/live-feed-smoke.json).
 - This was not a four-hour forward test, and it does not demonstrate fills,
   profitability or uninterrupted hosting.
-- Virtuals displayed **No Instance**. Its deployment flow may settle hosting
-  from the agent wallet. Deployment approval and its current price still need
-  review. Developer inference-credit approval is separate.
+- Virtuals displayed **No Instance**. Its hosting review displayed **20 USDC per
+  month** on 2026-10-14; no purchase was made. Recheck the checkout before payment.
+  A generic runtime is not proof this worker is installed or compatible.
+  Developer inference-credit approval is separate.
 
 ## Concrete first-session configuration
 
