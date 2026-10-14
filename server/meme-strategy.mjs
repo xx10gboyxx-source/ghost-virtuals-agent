@@ -4,7 +4,7 @@ export const STRATEGIES=Object.freeze(['volume-breakout','trend-pullback']);
 
 const BASE=8453;
 const BAR_SECONDS=300;
-const RISK_FLAGS=Object.freeze(['is_honeypot','cannot_buy','cannot_sell_all','is_mintable','is_proxy','transfer_pausable','slippage_modifiable','owner_change_balance','hidden_owner','is_blacklisted']);
+export const RISK_FLAGS=Object.freeze(['is_honeypot','cannot_buy','cannot_sell_all','is_mintable','is_proxy','transfer_pausable','slippage_modifiable','owner_change_balance','hidden_owner','is_blacklisted','personal_slippage_modifiable','anti_whale_modifiable','trading_cooldown','can_take_back_ownership','external_call','selfdestruct','is_whitelisted','is_anti_whale']);
 const record=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const finite=value=>typeof value==='number'&&Number.isFinite(value);
 const positive=value=>finite(value)&&value>0;

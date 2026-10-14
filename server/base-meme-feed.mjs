@@ -1,4 +1,5 @@
 import {readLimitedText} from './request-security.mjs';
+import {RISK_FLAGS} from './meme-strategy.mjs';
 
 // Read-only public data for caller-selected Base pools. This feed discovers no
 // investments, holds no credentials, and has no signing or order API.
@@ -10,7 +11,7 @@ const numeric=value=>typeof value==='number'&&Number.isFinite(value)?value:
  typeof value==='string'&&/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(value)&&Number.isFinite(Number(value))?Number(value):null;
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const fail=()=>{throw new Error('Base market data unavailable.');};
-const flags=['is_open_source','is_honeypot','cannot_buy','cannot_sell_all','is_mintable','is_proxy','transfer_pausable','slippage_modifiable','owner_change_balance','hidden_owner','is_blacklisted','buy_tax','sell_tax'];
+const flags=['is_open_source',...RISK_FLAGS,'buy_tax','sell_tax'];
 
 function timestamp(value){
  const match=typeof value==='string'&&/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/.exec(value);
@@ -58,7 +59,11 @@ function concentration(raw){
  }
  // No LP, burn-address or contract exclusions: those need independently
  // verified classification. A truncated or inconsistent list is unknown.
- if(values.reduce((sum,value)=>sum+value,0)>1+1e-9)return null;
+ const total=values.reduce((sum,value)=>sum+value,0);
+ if(total>1+1e-9)return null;
+ // GoPlus returns the top ten. A complete list must cover total supply;
+ // allow 0.0001 percentage-point rounding, never treat missing supply as safe.
+ if(holders.length===count&&Math.abs(total-1)>1e-6)return null;
  return Math.min(100,values.sort((a,b)=>b-a).slice(0,10).reduce((sum,value)=>sum+value,0)*100);
 }
 function normalizeSecurity(raw,token,at){
