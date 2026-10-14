@@ -1,0 +1,16 @@
+name: Verify public agent
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm test
+      - run: npm run check:public
+      - run: node examples/demo.mjs > /tmp/ghost-demo.json
