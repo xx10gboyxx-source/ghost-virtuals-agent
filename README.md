@@ -1,11 +1,46 @@
 # GhOsT · Virtuals Agent
 
+[![Verify public agent](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml/badge.svg)](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml)
+
 **Clarity before the trade.** A public, runnable research prototype for disciplined
 market evaluation, persistent simulation state, and explainable agent reports.
 
 [Virtuals project](https://app.virtuals.io/virtuals/143409) ·
 [Creator updates](https://x.com/PulseLayerAI) ·
 [Agent evidence](docs/AGENT.md) · [Evaluation](docs/EVALUATION.md)
+
+**Review the current implementation:** [v0.2 reviewer guide](docs/REVIEW_GUIDE.md).
+It maps each capability to runnable code and a specific verification command.
+
+## Research agent v0.2
+
+Run a bounded task that observes simulation state, invokes two local read-only
+inspection tools, checks freshness and session validity, produces an evidence-linked
+assessment, and optionally asks Virtuals Compute for a cited explanation:
+
+```sh
+npm run agent:demo
+npm run evaluate
+npm run agent -- explain-wait ./state/ghost-grok.sqlite
+npm run agent -- session-review ./state/ghost-grok.sqlite
+```
+
+The two demo/evaluation commands are always offline, even if inference is enabled
+in the environment. Other tasks require explicit inference configuration before
+making a provider request. No task starts a session or fetches a market feed.
+
+Task results include the fixed plan, tool trace, source IDs, and a deterministic
+PASS/WAIT/BLOCKED assessment. Missing, stale or future-dated observations cannot
+produce PASS. Model responses must be JSON with a summary and valid evidence IDs;
+extra fields, nonexistent citations and tool calls are rejected. Valid citations
+do not guarantee correct prose: AI text remains untrusted commentary and never
+controls the engine. PASS describes recorded checks, not permission to trade.
+
+The current suite has **29 tests** and a separate **10-case synthetic behavior
+evaluation**. Provider responses in tests are synthetic; real inference quality
+and credit-program approval have not been demonstrated. Inspect a
+[task example](examples/research-task.json) or the
+[evaluation results](examples/task-evaluation.json).
 
 ## Current status
 
