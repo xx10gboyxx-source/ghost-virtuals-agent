@@ -1,0 +1,215 @@
+{
+  "fixture": "SYNTHETIC_OFFLINE_DEMO",
+  "liveOrders": false,
+  "modelCalls": 0,
+  "steps": [
+    {
+      "step": "Fresh install: paused",
+      "agent": "GhOsT",
+      "goal": "Explain the recorded simulation state and its risk checks.",
+      "evidence": {
+        "mode": "simulation",
+        "liveOrders": false,
+        "enabled": false,
+        "sessionUntil": 0,
+        "lastTick": 0,
+        "simulatedCash": 50,
+        "simulatedRealized": 0,
+        "simulatedFees": 0,
+        "positions": 0,
+        "orders": [],
+        "checks": []
+      },
+      "summary": "Simulation paused; 0 open position(s). No recorded market evaluation yet.",
+      "inference": {
+        "status": "disabled",
+        "commentary": null
+      },
+      "limitations": [
+        "Simulation evidence only; no live orders.",
+        "Synthetic evaluation is not a profitability or accuracy estimate.",
+        "AI commentary is untrusted text and cannot change engine decisions."
+      ]
+    },
+    {
+      "step": "Eligible synthetic entry: pending, not filled",
+      "agent": "GhOsT",
+      "goal": "Explain the recorded simulation state and its risk checks.",
+      "evidence": {
+        "mode": "simulation",
+        "liveOrders": false,
+        "enabled": true,
+        "sessionUntil": 1767240000000,
+        "lastTick": 1767225600000,
+        "simulatedCash": 50,
+        "simulatedRealized": 0,
+        "simulatedFees": 0,
+        "positions": 0,
+        "orders": [
+          {
+            "action": "BUY",
+            "side": "YES",
+            "status": "PENDING"
+          }
+        ],
+        "checks": [
+          {
+            "status": "PASS",
+            "code": "ORDER_SUBMITTED",
+            "checkedAt": 1767225600000
+          }
+        ]
+      },
+      "summary": "Simulation session enabled; 0 open position(s). PASS: ORDER_SUBMITTED",
+      "inference": {
+        "status": "disabled",
+        "commentary": null
+      },
+      "limitations": [
+        "Simulation evidence only; no live orders.",
+        "Synthetic evaluation is not a profitability or accuracy estimate.",
+        "AI commentary is untrusted text and cannot change engine decisions."
+      ]
+    },
+    {
+      "step": "Later synthetic book: simulated fill",
+      "agent": "GhOsT",
+      "goal": "Explain the recorded simulation state and its risk checks.",
+      "evidence": {
+        "mode": "simulation",
+        "liveOrders": false,
+        "enabled": true,
+        "sessionUntil": 1767240000000,
+        "lastTick": 1767225605000,
+        "simulatedCash": 45.33,
+        "simulatedRealized": 0,
+        "simulatedFees": 0.12,
+        "positions": 1,
+        "orders": [
+          {
+            "action": "BUY",
+            "side": "YES",
+            "status": "FILLED"
+          }
+        ],
+        "checks": [
+          {
+            "status": "WAIT",
+            "code": "POSITION_OPEN",
+            "checkedAt": 1767225605000
+          },
+          {
+            "status": "WAIT",
+            "code": "POSITION_MONITORING",
+            "checkedAt": 1767225605000
+          }
+        ]
+      },
+      "summary": "Simulation session enabled; 1 open position(s). WAIT: POSITION_OPEN; WAIT: POSITION_MONITORING",
+      "inference": {
+        "status": "disabled",
+        "commentary": null
+      },
+      "limitations": [
+        "Simulation evidence only; no live orders.",
+        "Synthetic evaluation is not a profitability or accuracy estimate.",
+        "AI commentary is untrusted text and cannot change engine decisions."
+      ]
+    },
+    {
+      "step": "Protective exit: pending",
+      "agent": "GhOsT",
+      "goal": "Explain the recorded simulation state and its risk checks.",
+      "evidence": {
+        "mode": "simulation",
+        "liveOrders": false,
+        "enabled": true,
+        "sessionUntil": 1767240000000,
+        "lastTick": 1767225610000,
+        "simulatedCash": 45.33,
+        "simulatedRealized": 0,
+        "simulatedFees": 0.12,
+        "positions": 1,
+        "orders": [
+          {
+            "action": "BUY",
+            "side": "YES",
+            "status": "FILLED"
+          },
+          {
+            "action": "SELL",
+            "side": "YES",
+            "status": "PENDING"
+          }
+        ],
+        "checks": [
+          {
+            "status": "WAIT",
+            "code": "PENDING_ORDER",
+            "checkedAt": 1767225610000
+          },
+          {
+            "status": "WAIT",
+            "code": "EXIT_PENDING",
+            "checkedAt": 1767225610000
+          }
+        ]
+      },
+      "summary": "Simulation session enabled; 1 open position(s). WAIT: PENDING_ORDER; WAIT: EXIT_PENDING",
+      "inference": {
+        "status": "disabled",
+        "commentary": null
+      },
+      "limitations": [
+        "Simulation evidence only; no live orders.",
+        "Synthetic evaluation is not a profitability or accuracy estimate.",
+        "AI commentary is untrusted text and cannot change engine decisions."
+      ]
+    },
+    {
+      "step": "Later book: simulated exit; same-window re-entry blocked",
+      "agent": "GhOsT",
+      "goal": "Explain the recorded simulation state and its risk checks.",
+      "evidence": {
+        "mode": "simulation",
+        "liveOrders": false,
+        "enabled": true,
+        "sessionUntil": 1767240000000,
+        "lastTick": 1767225615000,
+        "simulatedCash": 50.99,
+        "simulatedRealized": 0.99,
+        "simulatedFees": 0.2,
+        "positions": 0,
+        "orders": [
+          {
+            "action": "BUY",
+            "side": "YES",
+            "status": "FILLED"
+          },
+          {
+            "action": "SELL",
+            "side": "YES",
+            "status": "FILLED"
+          }
+        ],
+        "checks": [
+          {
+            "status": "BLOCKED",
+            "code": "WINDOW_ALREADY_ENTERED",
+            "checkedAt": 1767225615000
+          }
+        ]
+      },
+      "summary": "Simulation session enabled; 0 open position(s). BLOCKED: WINDOW_ALREADY_ENTERED",
+      "inference": {
+        "status": "disabled",
+        "commentary": null
+      },
+      "limitations": [
+        "Simulation evidence only; no live orders.",
+        "Synthetic evaluation is not a profitability or accuracy estimate.",
+        "AI commentary is untrusted text and cannot change engine decisions."
+      ]
+    }
+  ]
+}
