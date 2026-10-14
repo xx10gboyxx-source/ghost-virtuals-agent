@@ -1,0 +1,102 @@
+{
+  "kind": "synthetic-offline-task-demo",
+  "liveProviderCalls": 0,
+  "schemaVersion": "1.0",
+  "agent": "GhOsT",
+  "task": "explain-wait",
+  "goal": "Explain why recorded simulation checks pass, wait or block.",
+  "mode": "simulation",
+  "liveOrders": false,
+  "observedAt": 1800000000000,
+  "plan": [
+    "observe",
+    "inspect_session",
+    "inspect_checks",
+    "assess",
+    "explain"
+  ],
+  "evidence": [
+    {
+      "id": "session",
+      "source": "simulation-ledger",
+      "value": {
+        "enabled": true,
+        "sessionUntil": 1800000060000,
+        "active": true
+      }
+    },
+    {
+      "id": "freshness",
+      "source": "simulation-ledger",
+      "value": {
+        "lastTick": 1800000000000,
+        "maximumAgeMs": 15000,
+        "fresh": true
+      }
+    },
+    {
+      "id": "balances",
+      "source": "simulation-ledger",
+      "value": {
+        "cash": 50,
+        "realized": 0,
+        "fees": 0,
+        "positions": 0
+      }
+    },
+    {
+      "id": "check-1",
+      "source": "recorded-diagnostic",
+      "value": {
+        "status": "WAIT",
+        "code": "STALE_BOOK",
+        "checkedAt": 1800000000000,
+        "fresh": true
+      }
+    }
+  ],
+  "assessment": {
+    "state": "WAIT",
+    "reasons": [
+      {
+        "state": "WAIT",
+        "code": "STALE_BOOK",
+        "evidenceId": "check-1"
+      }
+    ],
+    "meaning": "Recorded simulation evidence only; PASS never authorizes a trade."
+  },
+  "trace": [
+    {
+      "step": "observe",
+      "status": "completed"
+    },
+    {
+      "step": "inspect_session",
+      "status": "completed"
+    },
+    {
+      "step": "inspect_checks",
+      "status": "completed"
+    },
+    {
+      "step": "assess",
+      "status": "completed"
+    },
+    {
+      "step": "explain",
+      "status": "disabled"
+    }
+  ],
+  "inference": {
+    "status": "disabled",
+    "result": null,
+    "untrusted": true,
+    "requests": 0
+  },
+  "limitations": [
+    "This is a fixed, bounded research workflow, not an autonomous trading service.",
+    "Evidence references are checked; semantic accuracy of AI text is not guaranteed.",
+    "Synthetic tests do not establish trading profitability or real-provider quality."
+  ]
+}

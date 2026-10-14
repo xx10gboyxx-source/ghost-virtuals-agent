@@ -1,0 +1,69 @@
+{
+  "kind": "synthetic-behavior-evaluation",
+  "liveProviderCalls": 0,
+  "modelQualityMeasured": false,
+  "cases": [
+    {
+      "name": "fresh-recorded-pass",
+      "expected": "PASS",
+      "actual": "PASS",
+      "passed": true
+    },
+    {
+      "name": "paused",
+      "expected": "WAIT",
+      "actual": "WAIT",
+      "passed": true
+    },
+    {
+      "name": "expired",
+      "expected": "WAIT",
+      "actual": "WAIT",
+      "passed": true
+    },
+    {
+      "name": "missing-tick",
+      "expected": "WAIT",
+      "actual": "WAIT",
+      "passed": true
+    },
+    {
+      "name": "stale-tick",
+      "expected": "WAIT",
+      "actual": "WAIT",
+      "passed": true
+    },
+    {
+      "name": "future-tick",
+      "expected": "WAIT",
+      "actual": "WAIT",
+      "passed": true
+    },
+    {
+      "name": "no-checks",
+      "expected": "WAIT",
+      "actual": "WAIT",
+      "passed": true
+    },
+    {
+      "name": "stale-check",
+      "expected": "WAIT",
+      "actual": "WAIT",
+      "passed": true
+    },
+    {
+      "name": "risk-block",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "passed": true
+    },
+    {
+      "name": "invalid-balance",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "passed": true
+    }
+  ],
+  "passed": 10,
+  "failed": 0
+}
