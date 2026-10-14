@@ -1,4 +1,8 @@
-# GhOsT operating-readiness audit — 2026-10-14
+# GhOsT real-money readiness audit — 2026-10-14
+
+**The v0.4 research/simulation runner operates without money.** Run `npm start`;
+[OPERATING.md](OPERATING.md) covers automatic discovery, saved reports and controls.
+This audit concerns future real-money execution, not permission to run research.
 
 **Not ready for real trading funds.** Adding money or inference credits does not
 start trading. The code implements Base meme research, a simulation operator and
@@ -33,10 +37,10 @@ justify weakening checks.
 
 | Requirement | Result | Evidence / remaining work |
 | --- | --- | --- |
-| Base meme identity and two closed-candle strategies | Local verification passed | Feed, strategy and scanner tests; exact pool selection required |
+| Base meme identity and two closed-candle strategies | Local verification passed | Feed, strategy and scanner tests; automatic token-pool discovery or exact pool selection |
 | Risk checks and modeled accounting | Local verification passed | Pause/resume, midnight gaps, costs, invalid state and recovery regressions |
 | ACP request through report delivery | Local integration passed | Child-process CLI fixture, actual scanner, persistent journal and duplicate tests |
-| Automated suite | 103 tests passed | Node 24, synthetic responses and local storage; no real money |
+| Automated suite | 136 tests passed | Node 24, synthetic responses and local storage; no real money |
 | Declared evaluations | 20 synthetic cases | Declared behavior, not profitability |
 | Live market coverage | Partial | One earlier bounded pool probe; stale/concentrated evidence prevented entry |
 | Continuous hosted operation | Unverified | Console showed No Instance; runtime, persistent disk and restart need testing |

@@ -6,7 +6,9 @@ does not activate trading.
 
 ## Implemented and locally tested
 
-Selected Base pool screening, two closed-candle strategies, bounded public data
+A continuous no-money research runner with automatic token-pool discovery,
+restart recovery and saved strategy reports (`npm start`). Selected Base pool
+screening, two closed-candle strategies, bounded public data
 adapters, persistent simulation, risk controls, evidence-linked research reports,
 a persistent ACP research worker and a read-only funding-readiness check.
 

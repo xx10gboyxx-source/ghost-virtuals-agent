@@ -1,6 +1,9 @@
 # Agent behavior
 
-GhOsT v0.3 researches caller-selected Base meme-token pools and models paper trades.
+GhOsT v0.4 researches Base meme-token pools and models simulated trades.
+`npm start` runs continuous wallet-free research, automatically discovers supported
+pools for a bounded token watchlist and saves both strategy reports. It needs no
+API key, credits or funding. See [OPERATING.md](OPERATING.md).
 The active plan is: read pool/candle/security evidence, screen risk, evaluate a
 volume-breakout or trend-pullback signal, retain a paper ledger, explain results.
 
