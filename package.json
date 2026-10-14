@@ -1,8 +1,8 @@
 {
   "name": "ghost-virtuals-agent",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
-  "description": "GhOsT Base meme market intelligence with token-risk screening, structured research, simulation and a staged ACP worker",
+  "description": "GhOsT wallet-free Base meme research and persistent simulation with automatic pool discovery",
   "type": "module",
   "engines": {
     "node": ">=24"
@@ -29,6 +29,13 @@
     "agent:demo": "node agent/task.mjs --demo",
     "evaluate": "node agent/task.mjs --evaluate && node examples/evaluate-meme.mjs",
     "check:public": "node scripts/check-public.mjs",
-    "readiness": "node scripts/readiness.mjs"
+    "readiness": "node scripts/readiness.mjs",
+    "start": "node agent/run.mjs run",
+    "agent:once": "node agent/run.mjs once",
+    "agent:status": "node agent/run.mjs status",
+    "agent:reports": "node agent/run.mjs reports",
+    "agent:pause": "node agent/run.mjs pause",
+    "agent:resume": "node agent/run.mjs resume",
+    "runtime:demo": "node examples/runtime-demo.mjs"
   }
 }

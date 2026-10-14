@@ -4,17 +4,30 @@
 
 **Research the token. Explain the risk. Test the strategy.**
 GhOsT turns market and token-security data into structured Base meme-coin research
-for traders, research teams and AI-agent builders. It evaluates caller-selected
-pools, explains why a setup passes or fails, and models strategy behavior before
-real capital is involved.
+for traders, research teams and AI-agent builders. It discovers pools for selected
+Base tokens, explains why a setup passes or fails, and models strategy behavior
+using simulated capital.
 
-The current product is a working local research and simulation prototype. Its
-ACP research worker is implemented; hosted customer delivery and live trading
-are not active. **Adding funds alone will not start a trading bot.**
+**Run GhOsT without money, a wallet, API keys or inference credits.** Version 0.4
+adds a continuous research runner with automatic pool discovery, both meme
+strategies, saved reports and persistent simulated positions.
+
+```sh
+git clone https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git
+cd ghost-virtuals-agent
+npm start
+```
+
+Requires Node.js 24+. The default watchlist is the verified TOSHI Base contract;
+GhOsT selects its highest-liquidity supported pool and applies the existing risk
+checks. This is a configurable research target, not a recommendation. The first
+new ledger starts with **$50 simulated cash**. No deposit is involved. Research
+continues every 75 seconds while the process runs, including after the four-hour
+simulation entry window ends. [Run and control GhOsT](docs/OPERATING.md).
 
 [Virtuals project](https://app.virtuals.io/virtuals/143409) ·
 [Creator](https://x.com/PulseLayerAI) · [Business overview](docs/BUSINESS_OVERVIEW.md) ·
-[Reviewer guide](docs/REVIEW_GUIDE.md) · [Operating readiness](docs/READINESS.md)
+[Reviewer guide](docs/REVIEW_GUIDE.md) · [Run without money](docs/OPERATING.md)
 
 ## Who it serves
 
@@ -43,24 +56,22 @@ are not active. **Adding funds alone will not start a trading bot.**
 
 These are experimental rules, not a proven investment edge. Thresholds are research
 settings. “Meme coin” is a user-selected token category; the software cannot infer
-that identity from a ticker. An operator must select exact Base pool contracts.
+that identity from a ticker. Choose exact Base token contracts for automatic pool discovery, or explicit pool
+contracts. The default watchlist does not discover unrelated tokens.
 
 ## Current status
 
-**Research and simulation only. Not deployed for unattended operation.** The package has no
-live swap executor or real exit manager. The ACP job worker uses an external
-official CLI signer for provider actions, but no hosted paid service is active. One live Base pool's
-market/security responses and a bounded local restart/outage smoke test have been
-checked. A hosted four-hour run, actual trade fills, real inference quality and
-profitability remain unvalidated. [Launch status and commands](docs/HOSTING.md).
-Adding money or compute credits does not activate trading. Run `npm run readiness`
-for the read-only funding gate (currently blocked, exit 2). The
-[operating-readiness audit](docs/READINESS.md) records verified behavior and the
-remaining execution, hosting, signer and real integration requirements.
+**The no-money research and simulation runtime is implemented and tested.** It
+runs on a computer or server with Node.js 24 and persistent storage. This repository
+does not itself keep that computer online or deploy a hosted service. The ACP
+customer-job worker is separate and remains staged; live swaps are not implemented.
+Use `npm run agent:status` for local state and `npm run agent:reports` for saved
+results. `npm run readiness` is a separate future real-money funding gate, not a
+requirement to operate this runtime. [Historical host checks](docs/HOSTING.md).
 
 The active commands use **Base spot tokens**, not BTC 15-minute outcome contracts.
 Two old `server/polymarket-*` files remain solely as historical source excerpts;
-they are not imported by the v0.3 operator. Old BTC ledgers are explicitly rejected.
+they are not imported by the v0.4 operator. Old BTC ledgers are explicitly rejected.
 No xAI Grok connection is claimed. The GHOST project token is not automatically a
 trading target, and the project does not promise returns to token holders.
 
@@ -73,12 +84,13 @@ git clone https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git
 cd ghost-virtuals-agent
 npm test
 npm run demo
+npm run runtime:demo
 npm run agent:demo
 npm run evaluate
 npm run check:public
 ```
 
-The current suite has **103 tests** and **20 synthetic evaluation cases** (10 agent
+The current suite has **136 tests** and **20 synthetic evaluation cases** (10 agent
 reporting cases and 10 meme-market screening cases). These test software behavior,
 not investment performance. The offline demo follows a synthetic token entry and
 exit; all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).
@@ -94,12 +106,12 @@ duplicate protection and recovery records. **Hosting and authenticated delivery
 remain unverified**, and the offering is hidden pending activation.
 [Input/output](docs/MEME_OFFERING.md) · [Worker setup and acceptance](docs/ACP_WORKER.md).
 
-## Run a local paper session
+## Advanced direct-operator commands
 
-Set `GHOST_BASE_POOLS` in the process environment to one or two full Base pool
+For the older low-level operator only, set `GHOST_BASE_POOLS` in the process environment to one or two full Base pool
 contract addresses, separated by commas. Do not use a token address in place of a
-pool address. Only the pool's base-token side is supported. The empty default
-selects no assets and returns WAIT. No account or wallet is connected.
+pool address. Only the pool's base-token side is supported. The low-level operator has no automatic discovery; its empty default
+selects no assets and returns WAIT. Use `npm start` for the new automatic runner. No account or wallet is connected.
 
 ```sh
 node operator.mjs status ./state/ghost-meme.sqlite
@@ -134,8 +146,8 @@ for existing position checks. Unknown sale evidence keeps positions unresolved.
 
 The unsigned feed reads selected Base pools and closed 5-minute OHLCV from
 GeckoTerminal, and token-risk data from GoPlus. It uses fixed origins, response
-limits, deadlines, caches, a per-process eight-request/minute budget and 429
-cooldowns. It makes no paid fallback requests. Provider limits can change.
+limits, deadlines, caches and 429 cooldowns. The continuous runtime additionally
+persists a shared eight-request/minute budget and provider cooldowns across restarts. It makes no paid fallback requests. Provider limits can change.
 
 Quote timestamps describe retrieval, not an independently authenticated trade.
 Security reports may be incomplete, wrong or stale; screening cannot guarantee
