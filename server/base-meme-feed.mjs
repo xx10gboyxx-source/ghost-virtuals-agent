@@ -35,7 +35,8 @@ function normalizePool(raw,pool,at){
  }
  const priceUsd=numeric(a.base_token_price_usd),liquidityUsd=numeric(a.reserve_in_usd),volume24hUsd=numeric(a.volume_usd?.h24),poolCreatedAt=timestamp(a.pool_created_at);
  if(priceUsd===null||priceUsd<=0||liquidityUsd===null||liquidityUsd<0||volume24hUsd===null||volume24hUsd<0||poolCreatedAt===null||poolCreatedAt<0||poolCreatedAt>at)fail();
- return {chainId:8453,tokenAddress:token,poolAddress:pool,observedAt:at,priceUsd,liquidityUsd,volume24hUsd,poolCreatedAt,quote};
+ return {chainId:8453,tokenAddress:token,poolAddress:pool,observedAt:at,priceUsd,liquidityUsd,volume24hUsd,poolCreatedAt,
+  quoteTokenAddress:quote,quotePriceUsd:numeric(a.quote_token_price_usd),quote};
 }
 function normalizeCandles(raw,token,quote){
  const rows=raw?.data?.attributes?.ohlcv_list;
