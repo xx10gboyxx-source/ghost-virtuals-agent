@@ -1,0 +1,105 @@
+{
+  "startedAt": "2026-10-14T16:16:57.917Z",
+  "kind": "bounded local live-data smoke test",
+  "hosted": false,
+  "realOrders": false,
+  "poolAddress": "0x4b0aaf3ebb163dd45f663b38b6d93f6093ebc2d3",
+  "http": [
+    {
+      "provider": "api.geckoterminal.com",
+      "status": 200,
+      "at": "2026-10-14T16:17:04.038Z"
+    },
+    {
+      "provider": "api.geckoterminal.com",
+      "status": 200,
+      "at": "2026-10-14T16:17:04.683Z"
+    },
+    {
+      "provider": "api.gopluslabs.io",
+      "status": 200,
+      "at": "2026-10-14T16:17:08.779Z"
+    }
+  ],
+  "observation": {
+    "observedAt": 1791994617919,
+    "tokenAddress": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4",
+    "priceUsd": 0.00010757329054691,
+    "liquidityUsd": 1023903.394,
+    "volume24hUsd": 3456.0255367494,
+    "candleCount": 100,
+    "latestCandleAt": 1791973200,
+    "securityPresent": true,
+    "top10HolderPct": 39.53783780620991,
+    "decision": {
+      "status": "BLOCKED",
+      "code": "CONCENTRATION_LIMIT",
+      "checkedAt": 1791994628782,
+      "reason": "Reported top-ten holder concentration exceeds the experimental 30% limit.",
+      "metrics": {
+        "chainId": 8453,
+        "priceUsd": 0.00010757329054691,
+        "liquidityUsd": 1023903.394,
+        "volume24hUsd": 3456.0255367494,
+        "quoteAgeMs": 10863,
+        "securityAgeMs": 4057
+      },
+      "plan": null
+    },
+    "expectedLatestClosedCandleAt": 1791994200,
+    "latestReturnedCandleLagSeconds": 21000,
+    "hasLatestClosedCandle": false
+  },
+  "session": {
+    "durationMs": 14400000,
+    "sessionUntil": 1792009017917,
+    "firstTick": 1791994628781,
+    "cash": 50,
+    "orders": 0,
+    "positions": 0,
+    "diagnostics": [
+      {
+        "status": "BLOCKED",
+        "code": "CONCENTRATION_LIMIT"
+      }
+    ]
+  },
+  "persistenceConfirmed": true,
+  "controlledOutage": {
+    "cash": 50,
+    "orders": 0,
+    "positions": 0,
+    "diagnostics": [
+      {
+        "status": "WAIT",
+        "code": "MARKET_DATA_UNAVAILABLE"
+      }
+    ]
+  },
+  "recovery": {
+    "cash": 50,
+    "orders": 0,
+    "positions": 0,
+    "diagnostics": [
+      {
+        "status": "BLOCKED",
+        "code": "CONCENTRATION_LIMIT"
+      }
+    ]
+  },
+  "final": {
+    "enabled": false,
+    "cash": 50,
+    "orders": 0,
+    "positions": 0,
+    "liveOrders": false
+  },
+  "completedAt": "2026-10-14T16:17:08.784Z",
+  "limitations": [
+    "Not a completed four-hour forward session.",
+    "No eligible signals or simulated fills observed.",
+    "Live hosting has not been deployed.",
+    "Recovery used the original still-fresh cached snapshot.",
+    "Newest returned candle started at 10:20 UTC, almost six hours behind this scan; no fresh entry history was established."
+  ]
+}
