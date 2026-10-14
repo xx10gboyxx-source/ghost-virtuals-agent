@@ -106,3 +106,16 @@ test('redirects, invalid JSON and oversized bodies fail without exposing provide
 test('a failure in a selected pool does not return a partial scan',async()=>{
  const h=fixture({feed:{pools:[POOL,POOL2]},respond:url=>url.includes(POOL2)?new Response('bad',{status:500}):json(url===securityURL?tokenSecurity():url.includes('/ohlcv/')?candles():poolData())});await assert.rejects(h.feed.snapshots(),/Base market data unavailable/);assert.equal(h.calls.length,4);
 });
+test('complete holder lists must account for supply instead of inventing low concentration',async()=>{
+ for(const count of [2,10]){
+  const raw=tokenSecurity(),s=raw.result[TOKEN];s.holder_count=String(count);s.holders=s.holders.slice(0,count).map(h=>({...h,percent:'0.01'}));
+  const h=fixture({respond:url=>json(url===securityURL?raw:url.includes('/ohlcv/')?candles():poolData())});
+  assert.equal((await h.feed.snapshots())[0].security.top10HolderPct,null);
+ }
+});
+test('additional provider trading restrictions survive normalization',async()=>{
+ const keys=['personal_slippage_modifiable','anti_whale_modifiable','trading_cooldown','can_take_back_ownership','external_call','selfdestruct','is_whitelisted','is_anti_whale'];
+ const raw=tokenSecurity();for(const key of keys)raw.result[TOKEN][key]='1';
+ const h=fixture({respond:url=>json(url===securityURL?raw:url.includes('/ohlcv/')?candles():poolData())});
+ const flags=(await h.feed.snapshots())[0].security.flags;for(const key of keys)assert.equal(flags[key],'1',key);
+});

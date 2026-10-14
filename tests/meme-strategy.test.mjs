@@ -5,7 +5,7 @@ import {evaluateMeme,screenMeme,STRATEGIES} from '../server/meme-strategy.mjs';
 const NOW=1800000000000;
 const TOKEN=`0x${'1'.repeat(40)}`;
 const POOL=`0x${'2'.repeat(40)}`;
-const riskFlags=['is_honeypot','cannot_buy','cannot_sell_all','is_mintable','is_proxy','transfer_pausable','slippage_modifiable','owner_change_balance','hidden_owner','is_blacklisted'];
+const riskFlags=['is_honeypot','cannot_buy','cannot_sell_all','is_mintable','is_proxy','transfer_pausable','slippage_modifiable','owner_change_balance','hidden_owner','is_blacklisted','personal_slippage_modifiable','anti_whale_modifiable','trading_cooldown','can_take_back_ownership','external_call','selfdestruct','is_whitelisted','is_anti_whale'];
 function fixture(strategy='volume-breakout'){
   const current=Math.floor(NOW/300000)*300;
   const closes=Array.from({length:60},(_,i)=>1+i*(strategy==='volume-breakout'?.001:.002));
@@ -129,4 +129,9 @@ test('invalid input and clocks return a non-executable result',()=>{
   for(const value of [null,undefined,[],{},'x'])assert.equal(evaluate(value).status,'WAIT');
   for(const now of [NaN,Infinity,-1,'1800000000000'])assert.equal(evaluateMeme(fixture(),{now}).status,'WAIT');
   assert.equal(evaluate(fixture(),{strategy:'btc-15m'}).status,'WAIT');
+});
+test('known per-wallet taxes and other unsupported trading restrictions cannot pass',()=>{
+ for(const key of ['personal_slippage_modifiable','anti_whale_modifiable','trading_cooldown','can_take_back_ownership','external_call','selfdestruct','is_whitelisted','is_anti_whale']){
+  const snapshot=fixture();snapshot.security.flags[key]='1';assert.equal(evaluate(snapshot).status,'BLOCKED',key);
+ }
 });

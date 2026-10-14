@@ -67,3 +67,58 @@ test('extreme finite market prices cannot corrupt a persisted paper ledger',asyn
  h.set(T+30000,1e308);const r=await h.o.action('tick');assert.equal(r.cash,before.cash);assert.equal(r.positions.length,1);assert.equal(h.o.read().peakEquity,50);assert.ok(r.diagnostics.some(d=>d.code==='POSITION_UNRESOLVED'));
  const reopen=new MemeOperator(h.path);assert.equal(reopen.status().cash,before.cash);reopen.close();
 });
+test('status and pause remain available when market configuration is invalid',async t=>{
+ const h=fixture(t);await h.o.action('start');const previous=process.env.GHOST_BASE_POOLS;
+ try{
+  process.env.GHOST_BASE_POOLS='invalid';const other=new MemeOperator(h.path,{clock:()=>T});
+  try{assert.equal(other.status().enabled,true);assert.equal((await other.action('pause')).enabled,false);}finally{other.close();}
+ }finally{if(previous===undefined)delete process.env.GHOST_BASE_POOLS;else process.env.GHOST_BASE_POOLS=previous;}
+});
+test('resuming an unexpired session preserves its deadline and cumulative spend',async t=>{
+ const h=fixture(t);await h.o.action('start');await h.o.action('tick');h.set(T+15000);await h.o.action('tick');
+ const p=h.o.status().positions[0];h.set(T+30000,p.takeProfit*1.01);await h.o.action('tick');h.set(T+45000);await h.o.action('tick');
+ const before=h.o.read();assert.ok(before.spent>0);await h.o.action('pause');h.time(T+60000);await h.o.action('start');
+ const after=h.o.read();assert.equal(after.sessionUntil,before.sessionUntil);assert.equal(after.spent,before.spent);assert.equal(after.enabled,true);
+});
+test('overnight losses trigger the daily lock before a subsequent entry',async t=>{
+ const h=fixture(t),start=Date.parse('2026-01-01T23:59:00Z');let row=memeFixture(start);h.time(start);h.feed.snapshots=async()=>[row];
+ await h.o.action('start');await h.o.action('tick');
+ const advance=(at,price)=>{h.time(at);row={...row,priceUsd:price??row.priceUsd,observedAt:at,security:{...row.security,checkedAt:at}};};
+ advance(start+15000);await h.o.action('tick');const p=h.o.status().positions[0];
+ advance(start+75000,p.entry*.2);let result=await h.o.action('tick');assert.equal(result.riskLock,'DAILY_LOSS_LIMIT');assert.equal(result.enabled,false);
+ advance(start+90000);result=await h.o.action('tick');assert.equal(result.positions.length,0);assert.ok(result.realized<-1.5);
+ row=memeFixture(start+105000);h.time(start+105000);result=await h.o.action('tick');assert.ok(!result.orders.some(o=>o.status==='PENDING'&&o.action==='BUY'));
+});
+test('malformed recovery state cannot bypass session or risk limits',async t=>{
+ const h=fixture(t);await h.o.action('start');const original=h.o.read(),db=new DatabaseSync(h.path);
+ try{
+  for(const patch of [{sessionUntil:'never'},{enabled:'true'},{dayStartEquity:null},{riskLock:'ignored'},{lastTick:-1},{positions:[{}]},{orders:[{}]},{spent:-1},{lastEquity:null},{cash:500},{realized:10}]){
+   db.prepare('UPDATE ghost_meme SET payload=? WHERE id=1').run(JSON.stringify({...original,...patch}));
+   await assert.rejects(h.o.action('tick'),/Invalid meme-coin simulation ledger/);
+  }
+ }finally{db.prepare('UPDATE ghost_meme SET payload=? WHERE id=1').run(JSON.stringify(original));db.close();}
+});
+test('entries whose target loses money after modeled costs are rejected before and at fill',async t=>{
+ const h=fixture(t);await h.o.action('start');h.row.security.flags.buy_tax='0.05';h.row.security.flags.sell_tax='0.05';
+ let r=await h.o.action('tick');assert.equal(r.orders.length,0);assert.ok(r.diagnostics.some(d=>d.code==='NET_TARGET_LOSS'));
+ h.row.security.flags.buy_tax='0';h.row.security.flags.sell_tax='0';await h.o.action('tick');assert.equal(h.o.status().orders[0]?.status,'PENDING');
+ h.set(T+15000);h.row.security.flags.buy_tax='0.05';h.row.security.flags.sell_tax='0.05';r=await h.o.action('tick');
+ assert.equal(r.positions.length,0);assert.equal(r.orders[0].status,'CANCELLED');assert.equal(r.cash,50);
+});
+test('restart validates position and order contents and preserves an unresolved mark',async t=>{
+ const h=fixture(t);await h.o.action('start');await h.o.action('tick');h.set(T+15000);await h.o.action('tick');
+ const original=h.o.read(),db=new DatabaseSync(h.path);
+ try{
+  for(const change of [s=>s.positions[0].quantity=-1,s=>s.positions[0].stop='invalid',s=>s.positions[0].marketKey='different',s=>s.orders[0].status='CONFIRMED',s=>s.orders[0].filledAt=null]){
+   const s=structuredClone(original);change(s);db.prepare('UPDATE ghost_meme SET payload=? WHERE id=1').run(JSON.stringify(s));
+   assert.throws(()=>new MemeOperator(h.path),/Invalid meme-coin simulation ledger/);
+  }
+ }finally{db.prepare('UPDATE ghost_meme SET payload=? WHERE id=1').run(JSON.stringify(original));db.close();}
+ h.feed.snapshots=async()=>[];h.time(T+30000);await h.o.action('tick');assert.equal(h.o.read().lastEquity,original.lastEquity);
+});
+test('older v3 ledgers retain a conservative mark and a regressed clock cannot create entries',async t=>{
+ const h=fixture(t);await h.o.action('start');await h.o.action('tick');const original=h.o.read(),db=new DatabaseSync(h.path);
+ const old={...original};delete old.lastEquity;db.prepare('UPDATE ghost_meme SET payload=? WHERE id=1').run(JSON.stringify(old));db.close();
+ assert.equal(h.o.read().lastEquity,old.peakEquity);h.time(T-1);await assert.rejects(h.o.action('tick'),/regressed clock/);
+ assert.equal((await h.o.action('pause')).enabled,false);
+});
