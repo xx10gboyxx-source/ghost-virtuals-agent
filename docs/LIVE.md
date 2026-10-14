@@ -136,10 +136,13 @@ within validated bounds. High costs or missing data can produce no trade.
   stop, the real position remains visible, and `retry-exit` is an explicit recovery
   command after the cause is addressed. Existing loss locks remain in force.
 
-The current tests use real viem transaction encoding/signatures with deterministic
-RPC fixtures plus real SQLite restart tests. **No funded mainnet trade or fork-based
-end-to-end trade has been verified for this release.** No performance or return is
-established. The source provides execution capability; deployment and actual wallet
-configuration remain with each user.
+Dedicated live tests now use real viem transaction encoding/signatures with
+deterministic RPC fixtures and real SQLite restart tests. The
+[execution verification report](LIVE_EXECUTION_TESTS.md) maps coverage, reproduced
+defects and remaining gaps. A pinned zero-funds Base fork reached a successful local
+approval but stopped at `L1_FEE_UNKNOWN` because Anvil omitted the receipt fee field.
+**No funded mainnet trade or complete fork-based end-to-end trade has been verified.**
+No performance or return is established. Deployment and actual wallet configuration
+remain with each user.
 
 Official contract reference: [Uniswap Base v3 deployments](https://developers.uniswap.org/docs/protocols/v3/deployments/v3-base-deployments).
