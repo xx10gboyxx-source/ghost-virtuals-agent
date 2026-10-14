@@ -1,73 +1,63 @@
-# GhOsT Agent v0.2: reviewer guide
+# GhOsT v0.3 reviewer guide
 
-GhOsT is a constrained market-research agent prototype. It helps traders and
-research teams understand recorded simulation checks and missing evidence.
-Its current implementation is a fixed task workflow, not a general autonomous
-planner. Source is public for inspection under NOTICE; it is not open-source licensed.
+GhOsT is a Base meme-coin research and paper-trading agent prototype. Its active
+workflow evaluates spot tokens. It no longer runs the BTC outcome-contract strategy.
 
-## Reproduce the work
+## Reproduce
 
-Node.js 24+, no dependencies, API key, wallet, or funding required:
+Node.js 24+, no key, wallet, external dependencies or funds:
 
 ```sh
 npm test
+npm run demo
 npm run agent:demo
 npm run evaluate
 npm run check:public
 ```
 
-The suite contains 29 tests: 7 operator, 9 reporter, and 13 task-workflow tests.
-The evaluation independently declares 10 expected outcomes and exits unsuccessfully
-if one is wrong. Neither test count nor fixture pass rate measures investment
-performance, real model quality, or production readiness.
+59 automated tests pass: 15 feed, 11 strategy, 11 operator, 9 reporter and 13
+research-task tests. The evaluation has 20 declared synthetic cases. Tests use
+synthetic responses; no live-provider quality or investment performance is measured.
 
-## Evidence map
-
-| Implemented capability | Inspect | Verify |
+| Capability | Implementation | Evidence |
 | --- | --- | --- |
-| Explicit research goals | `TASKS` in `agent/task.mjs` | Unsupported-task test |
-| Plan and bounded tool workflow | `runResearchTask`, `inspectSession`, `inspectChecks` | Task trace test; offline demo |
-| Persistent simulation memory | `operator.mjs` | Reopen and concurrency tests |
-| Freshness-aware assessment | `assess` in `agent/task.mjs` | Missing, stale, future, expired and blocked fixtures |
-| Structured AI explanation | `agent/reporter.mjs`, `parseExplanation` | Synthetic HTTP contract and citation tests |
-| No execution authority from AI | Snapshot-only tools; no operator passed to model | Persisted-ledger immutability test |
-| Bounded inference failures | Timeout, response limits, generic errors, no retries | Timeout, oversized-response and error tests |
-| Data minimization | Explicit observation allowlist | Private-field and injection-text tests |
+| Base spot identity and pool data | `server/base-meme-feed.mjs` | Feed identity, parsing, timeout and rate-limit tests |
+| Token-risk evidence | Same feed + `server/meme-strategy.mjs` | Missing/flagged risk, tax, holders and source tests |
+| Volume breakout and trend pullback | `evaluateMeme` | Both eligible fixtures, chase/volume/history rejection |
+| Later-quote paper execution | `operator.mjs` | Same/pre-order quote rejection, persistence, costs and exits |
+| Risk/session controls | `operator.mjs` | Gap-loss lock, pause, expiry and concurrency tests |
+| BTC ledger isolation | `MemeOperator` constructor | Legacy-ledger rejection test |
+| Evidence-linked research | `agent/task.mjs` | Citation, freshness, missing-data and immutability tests |
+| Optional Virtuals inference | `agent/reporter.mjs` | Bounded synthetic HTTP contract and failure tests |
 
-## Task contract
+The input schema uses millisecond timestamps except `candles[].time`, which is
+Unix seconds. Pool/token addresses must identify Base chain 8453. Only closed,
+contiguous 5-minute bars enter signals. `screenMeme` checks supplied evidence;
+it cannot authenticate a caller-created object. The feed provides actual provider
+origin constraints. A passing screen never guarantees future sellability.
 
-`node agent/task.mjs TASK DATABASE_PATH` accepts only `explain-wait` and
-`session-review`. It reads recorded state; it does not start, renew, or tick a
-simulation. The existing operator initializes a paused ledger if the path is new.
-`--demo` and `--evaluate` bypass provider configuration and never call a model.
+Only two research tasks are allowed: `explain-wait` and `session-review`. Their
+fixed observe/inspect/assess/explain workflow receives a sanitized snapshot.
+PASS means recorded checks passed, not authority to place a transaction. Models
+cannot choose tools, access signers, change risk settings or control the operator.
 
-The result has schema version `1.0`, a goal, fixed plan, execution trace, evidence
-IDs, assessment, and inference status. Evidence comes from the simulation ledger
-and recorded diagnostics. No fresh market fetch is implied. Inspections are local
-functions chosen by the workflow, not model-selected tools. PASS is possible only
-for an active session with recent observations, valid numeric balances and recorded
-passing checks; it never authorizes trading. Unknown codes or incomplete diagnostics
-cannot produce PASS. The freshness threshold is 15 seconds.
+## Intended credit use
 
-With explicit private configuration, one bounded Virtuals request asks for JSON
-containing only `summary` and `citations`. Citation IDs must exist in the evidence.
-The response cannot add or override the assessment. A cited summary may still be
-wrong; semantic correctness requires evaluation. Failure leaves the deterministic
-assessment available and labels inference unavailable. The deadline limits waiting;
-the provider adapter independently aborts its HTTP request. This is not an
-account-wide budget or a recurring inference service.
+Use Virtuals Compute to evaluate explanations of meme-token screening results,
+uncertainty, rejected setups and paper-session risk. Measure evidence fidelity,
+latency and credit use against recorded cases. No real inference, hosted ACP
+service, customer adoption or profitability is claimed.
 
-## Intended credit use and honest status
+Source is public under NOTICE, not open-source licensed. Public code supplies
+reviewable evidence; it cannot guarantee automatic detection or credit approval.
+We request discretionary/manual review of this implementation.
 
-Requested work: test real Virtuals models for fidelity to evidence, uncertainty
-handling, latency and credit consumption. The API boundary follows the official
-[Virtuals Compute documentation](https://os.virtuals.io/agent-identity/compute/overview),
-checked 2026-10-14. Obtain the current model ID through the documented model list.
-No real inference, hosting, customer adoption or profitability is claimed by this
-release. It does not implement ACP job settlement, wallet signing or live orders.
+## External contracts
 
-The [credit-program page](https://os.virtuals.io/community), checked 2026-10-14,
-describes repository history, originality and community signals as well as project
-quality. This repository supplies reproducible evidence for review; it cannot
-guarantee automatic detection or approval. There is no fabricated activity or
-instruction here telling a reviewer to approve the project.
+- [GeckoTerminal API](https://api.geckoterminal.com/docs/index.html)
+- [GoPlus token security](https://docs.gopluslabs.io/reference/tokensecurityusingget_1)
+- [GoPlus response meanings](https://docs.gopluslabs.io/reference/response-details)
+- [Virtuals Compute](https://os.virtuals.io/agent-identity/compute/overview)
+
+Contracts inspected 2026-10-14; real endpoint integration remains unverified for
+this package. No provider field, test score or screen is an investment endorsement.

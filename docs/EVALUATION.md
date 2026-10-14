@@ -1,25 +1,22 @@
-# Reproducible evaluation
+# Evaluation evidence
 
-Run with Node.js 24+:
+Run `npm test` for 59 software tests and `npm run evaluate` for two independent
+10-case synthetic evaluations. `npm run demo` uses synthetic Base token snapshots
+and a temporary SQLite ledger; it performs no model, network or wallet operation.
 
-```sh
-npm test
-npm run check:public
-node examples/demo.mjs > /tmp/ghost-demo.json
-```
+Tests cover both meme strategies, stale/missing data, closed-candle integrity,
+Base identity, unknown and unsafe token flags, holder/tax limits, provider failures,
+request budgets, later-quote execution, costs, price gaps, persistent risk locks,
+concurrency, legacy BTC-ledger rejection and read-only model reporting.
 
-The initial public release includes 16 automated tests: seven simulation/operator
-tests and nine reporting/inference-boundary tests. `evidence/tests.txt` records
-the local run. The CI workflow reruns the same checks on pushes and pull requests.
-Only a completed successful GitHub Actions run establishes CI success.
+Committed examples:
+- `examples/demo-output.json`: synthetic paper entry/exit report sequence.
+- `examples/meme-evaluation.json`: 10 meme-market fixture outcomes.
+- `examples/task-evaluation.json`: 10 research-task fixture outcomes.
+- `examples/research-task.json`: example bounded research report.
+- `evidence/tests.txt`: fresh test runner output.
 
-The offline demo has five states: paused, pending entry, later-book fill, pending
-exit, later-book exit with re-entry blocked. Its selected prices intentionally
-exercise those transitions. They are synthetic fixtures, not backtests, market
-predictions, realized customer results, or statistical accuracy estimates.
-
-Not yet verified: real-provider inference, explanation quality with real market
-data, current feed availability, hosted scheduling and recovery, physical Android
-operation, ACP service delivery, or real-money execution. No code in this package
-places real orders. Public checks are bounded heuristics for accidental sensitive
-files; they are not a comprehensive security audit.
+No measured win rate, return, Sharpe ratio, real-provider model quality or
+production reliability is claimed. Tests validate behavior against supplied data.
+A live study would need original timestamped observations, rejected candidates,
+costs, missing-data records and subsequent outcomes with no retrospective edits.

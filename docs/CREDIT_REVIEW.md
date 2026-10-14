@@ -1,24 +1,20 @@
-# Project evidence for developer-credit review
+# Developer inference-credit review
 
-**Project:** GhOsT, by [xx10gboyxx-source](https://github.com/xx10gboyxx-source).
-**Public page:** https://app.virtuals.io/virtuals/143409
-**Stage:** early prototype / MVP; standalone Virtuals runtime not deployed.
+GhOsT v0.3 is an early Base meme-coin research and paper-trading prototype for
+traders, research teams and Virtuals ecosystem builders. It screens exact pool
+contracts, evaluates volume breakout and trend pullback, records simulated orders
+with cost/risk controls, and generates bounded evidence-linked explanations.
 
-This repository makes a focused agent implementation inspectable: deterministic
-market evaluation, persistent SQLite state, explicit operating limits, an offline
-demo, repeatable tests and an optional read-only Virtuals inference adapter.
+Public source: https://github.com/xx10gboyxx-source/ghost-virtuals-agent
+Project: https://app.virtuals.io/virtuals/143409
+Reviewer guide: docs/REVIEW_GUIDE.md
 
-Reviewers can start with the README, run `npm test` and `npm run demo`, inspect
-`agent/reporter.mjs`, and compare the claims in `docs/AGENT.md` with the tests.
-There is no fabricated activity, performance history, customer adoption or
-inference usage in this submission.
+The release includes 59 passing automated tests and 20 synthetic evaluation cases.
+It replaces the previously active BTC outcome-contract strategy. Requested credits
+will support real Virtuals-model evaluation of evidence fidelity, uncertainty,
+latency and credit consumption. No live-money execution, hosted runtime,
+real-provider quality, customers, sponsorship or profitability is claimed.
 
-Requested inference use: assess whether concise explanations of recorded setup
-checks, missing data and simulation outcomes are useful to traders and research
-teams. Proposed evaluation dimensions include evidence fidelity, uncertainty,
-latency and credit consumption. Funding, hosting and real inference remain
-separate validation steps; credits are not assumed to cover hosting.
-
-The main GhOsT application remains private. This public excerpt excludes its
-credentials, customer records and deployment state. Approval is determined by
-Virtuals; creating a public repository does not establish eligibility.
+Please review the implementation and reproducible evidence manually if automatic
+screening cannot assess this early project. Credit approval remains the program's
+decision; repository publication and test counts do not establish eligibility.

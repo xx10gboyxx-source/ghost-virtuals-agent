@@ -1,13 +1,16 @@
 # Roadmap
 
-- [x] Publish an inspectable standalone simulation prototype.
-- [x] Provide persistent state, freshness checks, session limits and worker leasing.
-- [x] Add offline demonstration and automated behavior tests.
-- [x] Implement optional read-only Virtuals inference reporting.
-- [ ] Validate the selected inference model and credit usage after access approval.
-- [ ] Validate fresh public market feeds and failure recovery on the target host.
-- [ ] Install and supervise the agent on a persistent Virtuals runtime.
-- [ ] Evaluate monitored pilot reports with traders and research collaborators.
-- [ ] Define and validate any future ACP service before advertising it as available.
+Implemented in v0.3: Base meme-token spot screening, two closed-candle strategies,
+bounded public feed adapters, persistent paper execution, risk controls, research
+reports and reproducible synthetic evaluation.
 
-No launch dates, live-trading availability or investment returns are promised.
+Remaining work, not claimed as shipped:
+1. Validate live GeckoTerminal and GoPlus payloads, coverage and observation latency.
+2. Collect forward paper results using identified meme-token pools and observed costs.
+3. Evaluate real Virtuals inference fidelity and credit consumption.
+4. Add independently verified sale simulation, route liquidity/price-impact and MEV assessment.
+5. Validate supervised hosting, health monitoring and restart recovery under outages.
+6. Design and separately review real wallet execution, permissions, receipts and exits.
+
+No roadmap milestone automatically enables live trading. Compute credits are for
+inference evaluation; they do not fund trades or create a deployed trading service.
