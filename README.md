@@ -1,13 +1,29 @@
-# GhOsT · Base Meme-Coin Agent
+# GhOsT · Base Meme Market Intelligence
 
 [![Verify public agent](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml/badge.svg)](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml)
 
 **Research the token. Explain the risk. Test the strategy.**
-GhOsT v0.3 is a Base meme-coin research and paper-trading prototype for traders,
-research teams and builders in the Virtuals ecosystem.
+GhOsT turns market and token-security data into structured Base meme-coin research
+for traders, research teams and AI-agent builders. It evaluates caller-selected
+pools, explains why a setup passes or fails, and models strategy behavior before
+real capital is involved.
+
+The current product is a working local research and simulation prototype. Its
+ACP research worker is implemented; hosted customer delivery and live trading
+are not active. **Adding funds alone will not start a trading bot.**
 
 [Virtuals project](https://app.virtuals.io/virtuals/143409) ·
-[Creator](https://x.com/PulseLayerAI) · [Reviewer guide](docs/REVIEW_GUIDE.md)
+[Creator](https://x.com/PulseLayerAI) · [Business overview](docs/BUSINESS_OVERVIEW.md) ·
+[Reviewer guide](docs/REVIEW_GUIDE.md) · [Operating readiness](docs/READINESS.md)
+
+## Who it serves
+
+| Audience | Intended value | Available evidence |
+| --- | --- | --- |
+| Traders | Compare two strategies with explicit rejection reasons | Closed 5-minute rules, token-risk checks and local simulation |
+| Research teams and businesses | Inspect consistent, timestamped reports | Structured JSON, reproducible cases and public source |
+| Virtuals / AI-agent builders | Integrate a bounded Base research task | Scanner and ACP worker; hosted delivery still needs validation |
+| Investors and ecosystem partners | Assess an inspectable early product | Test evidence and explicit launch gates; no validated revenue or returns |
 
 ## What works
 
@@ -31,12 +47,16 @@ that identity from a ticker. An operator must select exact Base pool contracts.
 
 ## Current status
 
-**Paper trading only. Not deployed for unattended operation.** The package has no
-wallet signer, live swap executor or paid ACP job service. One live Base pool's
+**Research and simulation only. Not deployed for unattended operation.** The package has no
+live swap executor or real exit manager. The ACP job worker uses an external
+official CLI signer for provider actions, but no hosted paid service is active. One live Base pool's
 market/security responses and a bounded local restart/outage smoke test have been
 checked. A hosted four-hour run, actual trade fills, real inference quality and
 profitability remain unvalidated. [Launch status and commands](docs/HOSTING.md).
-Adding money or compute credits does not activate trading.
+Adding money or compute credits does not activate trading. Run `npm run readiness`
+for the read-only funding gate (currently blocked, exit 2). The
+[operating-readiness audit](docs/READINESS.md) records verified behavior and the
+remaining execution, hosting, signer and real integration requirements.
 
 The active commands use **Base spot tokens**, not BTC 15-minute outcome contracts.
 Two old `server/polymarket-*` files remain solely as historical source excerpts;
@@ -58,7 +78,7 @@ npm run evaluate
 npm run check:public
 ```
 
-The current suite has **89 tests** and **20 synthetic evaluation cases** (10 agent
+The current suite has **103 tests** and **20 synthetic evaluation cases** (10 agent
 reporting cases and 10 meme-market screening cases). These test software behavior,
 not investment performance. The offline demo follows a synthetic token entry and
 exit; all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).
@@ -91,7 +111,8 @@ npm run agent -- session-review ./state/ghost-meme.sqlite
 
 To research `trend-pullback`, create a separate new paper database with that
 strategy argument. The strategy is saved on first creation. `run` resumes the
-stored strategy; it never starts or renews a session. Keep private runtime databases
+stored strategy; it never starts or renews a session. `start` after a pause within
+the same session preserves its original deadline and cumulative spend. Keep private runtime databases
 outside public source. A host must stay running for checks; this repository does
 not install or deploy one.
 
@@ -103,7 +124,8 @@ locks new entries; restarting a session does not clear the lock.
 
 Stop distance is the greater of 2× ATR14 and 3%, capped at 10%; target is 2× that
 price distance. Modeled costs include 0.3% fee, 1% slippage, supplied token taxes
-and $0.02 gas per fill. Stops request a later simulated sale and do not guarantee
+and $0.02 gas per fill. Entries and later fills reject targets that would lose money
+after those modeled costs. The 2R target describes gross price distance. Stops request a later simulated sale and do not guarantee
 price or cap loss. Gaps can exceed the modeled risk budget. Pending buys expire
 after three minutes. Pause cancels pending buys; an active worker is still needed
 for existing position checks. Unknown sale evidence keeps positions unresolved.
@@ -126,13 +148,16 @@ AI is disabled by default. Optional Virtuals inference can explain sanitized
 recorded evidence but cannot change orders, budgets or permissions. Model text
 remains untrusted even when its citation IDs are valid. [Configuration](docs/INFERENCE.md).
 
-## Collaborate
+## Work with GhOsT
 
-We welcome reproducible bugs, strategy research, data-quality comparisons and
-paper-trading feedback from companies, traders and Virtuals/Base builders.
+We are seeking design partners for research workflows, traders for forward
+simulation feedback, and infrastructure or strategic partners to help validate
+hosted delivery. The [business overview](docs/BUSINESS_OVERVIEW.md) describes
+the proposed service, staged pricing and measurable development milestones.
 Contact [@PulseLayerAI](https://x.com/PulseLayerAI) or use public Issues for
-non-sensitive technical discussion. No sponsorship, customers, profits or credit
-approval are claimed.
+non-sensitive technical discussion. Investment discussions concern an early
+software project; there is no published investment offer, validated trading
+performance, confirmed sponsorship or credit approval.
 
 Source is public for inspection under [NOTICE](NOTICE); no open-source license is
 granted. The main private GhOsT app and private account data are not included.

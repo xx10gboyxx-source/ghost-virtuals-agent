@@ -2,7 +2,7 @@
   "name": "GhOsT",
   "version": "0.3.0",
   "kind": "project-metadata-not-a-protocol-advertisement",
-  "description": "Base meme-coin research and paper trading with volume-breakout and trend-pullback strategies",
+  "description": "Base meme market intelligence: evidence-linked pool screening, closed-candle strategies and simulation for traders, research teams and agent builders",
   "projectUrl": "https://app.virtuals.io/virtuals/143409",
   "repository": "https://github.com/xx10gboyxx-source/ghost-virtuals-agent",
   "status": "prototype-not-hosted",
@@ -13,7 +13,9 @@
     "paper-trading",
     "persistent-ledger",
     "evidence-linked-reports",
-    "optional-read-only-inference"
+    "optional-read-only-inference",
+    "persistent-acp-research-worker",
+    "read-only-funding-readiness-check"
   ],
   "tasks": [
     "explain-wait",
@@ -25,8 +27,13 @@
   "liveProviderValidated": false,
   "defaultInference": "disabled",
   "liveOrders": false,
-  "walletSigning": false,
-  "acpServiceImplemented": false,
+  "acpServiceImplemented": true,
+  "acpServiceDeployed": false,
+  "acpDeliveryVerified": false,
+  "acpProviderActionsRequireSigner": true,
+  "liveExecutorImplemented": false,
+  "fundingReady": false,
+  "readinessCommand": "npm run readiness",
   "evaluation": "synthetic-tests-and-offline-demo",
   "chainId": 8453,
   "marketKind": "base-meme-spot",
@@ -34,5 +41,17 @@
     "volume-breakout",
     "trend-pullback"
   ],
-  "liveMarketDataValidated": false
+  "liveMarketDataValidated": true,
+  "liveMarketDataValidationScope": "one bounded pool probe; no eligible signal, coverage or trading performance established",
+  "businessOverview": "docs/BUSINESS_OVERVIEW.md",
+  "offering": "ghost_base_meme_scan",
+  "offeringStatus": "hidden-pending-hosted-delivery-validation",
+  "targetAudiences": [
+    "traders",
+    "research-teams",
+    "agent-builders",
+    "strategic-partners"
+  ],
+  "tokenTradeSigning": false,
+  "acpSigning": "delegated-to-externally-authenticated-official-cli; unverified-on-host"
 }

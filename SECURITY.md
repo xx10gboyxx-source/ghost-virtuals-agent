@@ -1,6 +1,8 @@
 # Security and privacy
 
-This prototype has no live-order client or wallet-signing capability. Inference
+This prototype has no token-trading executor. The ACP worker delegates signed
+provider fee/submission actions to an externally authenticated official CLI when
+run in that mode. Its host/signing integration is not yet verified. Inference
 is disabled by default. Keep any future compute key in the host's secret store,
 and keep runtime SQLite databases and logs outside this repository.
 

@@ -2,7 +2,7 @@
   "name": "ghost-virtuals-agent",
   "version": "0.3.0",
   "private": true,
-  "description": "GhOsT Base meme-coin research and paper-trading agent with token-risk screening and evidence-linked reports",
+  "description": "GhOsT Base meme market intelligence with token-risk screening, structured research, simulation and a staged ACP worker",
   "type": "module",
   "engines": {
     "node": ">=24"
@@ -28,6 +28,7 @@
     "agent": "node agent/task.mjs",
     "agent:demo": "node agent/task.mjs --demo",
     "evaluate": "node agent/task.mjs --evaluate && node examples/evaluate-meme.mjs",
-    "check:public": "node scripts/check-public.mjs"
+    "check:public": "node scripts/check-public.mjs",
+    "readiness": "node scripts/readiness.mjs"
   }
 }
