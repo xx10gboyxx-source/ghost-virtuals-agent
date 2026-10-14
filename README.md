@@ -32,8 +32,10 @@ that identity from a ticker. An operator must select exact Base pool contracts.
 ## Current status
 
 **Paper trading only. Not deployed for unattended operation.** The package has no
-wallet signer, live swap executor or paid ACP job service. Live provider responses,
-actual trade fills, real inference quality and profitability remain unvalidated.
+wallet signer, live swap executor or paid ACP job service. One live Base pool's
+market/security responses and a bounded local restart/outage smoke test have been
+checked. A hosted four-hour run, actual trade fills, real inference quality and
+profitability remain unvalidated. [Launch status and commands](docs/HOSTING.md).
 Adding money or compute credits does not activate trading.
 
 The active commands use **Base spot tokens**, not BTC 15-minute outcome contracts.
