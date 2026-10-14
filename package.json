@@ -1,8 +1,8 @@
 {
   "name": "ghost-virtuals-agent",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
-  "description": "GhOsT wallet-free Base meme research and persistent simulation with automatic pool discovery",
+  "description": "GhOsT Base meme research, simulation and self-hosted Uniswap v3 live execution",
   "type": "module",
   "engines": {
     "node": ">=24"
@@ -18,7 +18,8 @@
     "base",
     "meme-coins",
     "paper-trading",
-    "risk-screening"
+    "risk-screening",
+    "live-trading"
   ],
   "scripts": {
     "test": "node --test tests/*.test.mjs",
@@ -36,6 +37,10 @@
     "agent:reports": "node agent/run.mjs reports",
     "agent:pause": "node agent/run.mjs pause",
     "agent:resume": "node agent/run.mjs resume",
-    "runtime:demo": "node examples/runtime-demo.mjs"
+    "runtime:demo": "node examples/runtime-demo.mjs",
+    "live": "node live/run.mjs"
+  },
+  "dependencies": {
+    "viem": "2.57.7"
   }
 }

@@ -2,19 +2,22 @@
 
 [![Verify public agent](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml/badge.svg)](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml)
 
-**Research the token. Explain the risk. Test the strategy.**
+**Research Base memes. Compare signals. Run your own trading agent.**
 GhOsT turns market and token-security data into structured Base meme-coin research
 for traders, research teams and AI-agent builders. It discovers pools for selected
 Base tokens, explains why a setup passes or fails, and models strategy behavior
-using simulated capital.
+using simulated capital or the separately configured live executor.
 
-**Run GhOsT without money, a wallet, API keys or inference credits.** Version 0.4
-adds a continuous research runner with automatic pool discovery, both meme
+**v0.5: [Open the public portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/) · [Run with real assets](docs/LIVE.md).**
+The live runner signs real Base Uniswap v3 USDC/WETH swaps from a user-configured wallet, monitors exits and recovers pending transactions. The portal provides live-feed research and setup instructions; users host their own trading process. No funded mainnet execution has been verified for this release.
+
+**Run GhOsT without money, a wallet, API keys or inference credits.** The research runner includes a continuous research runner with automatic pool discovery, both meme
 strategies, saved reports and persistent simulated positions.
 
 ```sh
 git clone https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git
 cd ghost-virtuals-agent
+npm ci --ignore-scripts
 npm start
 ```
 
@@ -49,6 +52,9 @@ simulation entry window ends. [Run and control GhOsT](docs/OPERATING.md).
   Unknown or incomplete evidence prevents entry.
 - **Pool checks:** fresh quote, at least $100k reported liquidity, $50k daily
   volume, 48-hour pool age, complete candle history and quote/close consistency.
+- **Live execution:** canonical Base v3 pool verification, exact approvals, bounded swaps,
+  durable transaction hashes, receipt/balance reconciliation and real position exits.
+  Each user configures and runs their own wallet/host. [Setup](docs/LIVE.md).
 - **Paper execution:** later-quote entries and exits, cost-aware sizing, persisted
   SQLite state, stop/target logic, session deadline and loss locks.
 - **Research reports:** bounded `explain-wait` and `session-review` tasks with
@@ -64,24 +70,26 @@ contracts. The default watchlist does not discover unrelated tokens.
 **The no-money research and simulation runtime is implemented and tested.** It
 runs on a computer or server with Node.js 24 and persistent storage. This repository
 does not itself keep that computer online or deploy a hosted service. The ACP
-customer-job worker is separate and remains staged; live swaps are not implemented.
+customer-job worker is separate and remains staged. Live swaps are implemented in
+`live/`; use the explicit [live commands](docs/LIVE.md), not `npm start`, to trade.
 Use `npm run agent:status` for local state and `npm run agent:reports` for saved
-results. `npm run readiness` is a separate future real-money funding gate, not a
-requirement to operate this runtime. [Historical host checks](docs/HOSTING.md).
+results. `npm run readiness` describes the separate ACP deployment; it does not enable or
+block the live runner. Use `npm run live -- check ./live-config.json` for its checks. [Historical host checks](docs/HOSTING.md).
 
 The active commands use **Base spot tokens**, not BTC 15-minute outcome contracts.
 Two old `server/polymarket-*` files remain solely as historical source excerpts;
-they are not imported by the v0.4 operator. Old BTC ledgers are explicitly rejected.
+they are not imported by the current operator. Old BTC ledgers are explicitly rejected.
 No xAI Grok connection is claimed. The GHOST project token is not automatically a
 trading target, and the project does not promise returns to token holders.
 
 ## Run the evidence
 
-Node.js 24+, no dependencies, wallet, API key or funds required:
+Node.js 24+ and installed dependencies; offline tests require no wallet, API key or funds:
 
 ```sh
 git clone https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git
 cd ghost-virtuals-agent
+npm ci --ignore-scripts
 npm test
 npm run demo
 npm run runtime:demo
@@ -90,7 +98,7 @@ npm run evaluate
 npm run check:public
 ```
 
-The current suite has **136 tests** and **20 synthetic evaluation cases** (10 agent
+The current suite has **161 tests** and **20 synthetic evaluation cases** (10 agent
 reporting cases and 10 meme-market screening cases). These test software behavior,
 not investment performance. The offline demo follows a synthetic token entry and
 exit; all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).

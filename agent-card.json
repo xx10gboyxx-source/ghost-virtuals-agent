@@ -1,11 +1,11 @@
 {
   "name": "GhOsT",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "kind": "project-metadata-not-a-protocol-advertisement",
-  "description": "Wallet-free continuous Base meme research, automatic pool discovery, two closed-candle strategies, saved reports and persistent simulation",
+  "description": "Base meme live-feed research, two closed-candle strategies, persistent simulation and user-run Uniswap v3 real-asset execution",
   "projectUrl": "https://app.virtuals.io/virtuals/143409",
   "repository": "https://github.com/xx10gboyxx-source/ghost-virtuals-agent",
-  "status": "prototype-not-hosted",
+  "status": "public-research-and-self-hosted-live-executor",
   "capabilities": [
     "base-pool-market-data",
     "token-risk-screening",
@@ -18,7 +18,11 @@
     "read-only-funding-readiness-check",
     "automatic-token-pool-discovery",
     "continuous-wallet-free-research",
-    "persistent-cycle-reports"
+    "persistent-cycle-reports",
+    "canonical-base-v3-live-swaps",
+    "receipt-and-wallet-reconciliation",
+    "durable-live-position-exits",
+    "public-research-portal"
   ],
   "tasks": [
     "explain-wait",
@@ -34,7 +38,7 @@
   "acpServiceDeployed": false,
   "acpDeliveryVerified": false,
   "acpProviderActionsRequireSigner": true,
-  "liveExecutorImplemented": false,
+  "liveExecutorImplemented": true,
   "fundingReady": false,
   "readinessCommand": "npm run readiness",
   "evaluation": "synthetic-tests-and-offline-demo",
@@ -55,12 +59,19 @@
     "agent-builders",
     "strategic-partners"
   ],
-  "tokenTradeSigning": false,
+  "tokenTradeSigning": true,
   "acpSigning": "delegated-to-externally-authenticated-official-cli; unverified-on-host",
   "runtimeEntryPoint": "agent/run.mjs",
   "startCommand": "npm start",
   "operatingGuide": "docs/OPERATING.md",
   "runtimeWalletRequired": false,
   "runtimeFundingRequired": false,
-  "runtimeInferenceRequired": false
+  "runtimeInferenceRequired": false,
+  "liveEntryPoint": "live/run.mjs",
+  "liveGuide": "docs/LIVE.md",
+  "liveStartCommand": "npm run live -- run ./live-config.json",
+  "liveReadinessCommand": "npm run live -- check ./live-config.json",
+  "publicPortal": "https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/",
+  "fundedMainnetExecutionVerified": false,
+  "hostedCustomerTrading": false
 }

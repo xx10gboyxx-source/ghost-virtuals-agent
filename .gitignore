@@ -14,3 +14,7 @@ state/
 *.keystore
 coverage/
 .DS_Store
+
+portal/backend/ghost/
+portal/dist/
+live-config.json
