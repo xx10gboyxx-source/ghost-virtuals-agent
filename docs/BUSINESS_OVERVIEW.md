@@ -16,8 +16,8 @@ reviewable workflow and explains missing data and rejected setups as well as
 passing signals.
 
 The implementation supports two explicit strategies on closed 5-minute Base
-candles: volume breakout and trend pullback. A caller supplies the exact pool
-contract. The output is JSON with PASS, WAIT or BLOCKED, a reason, observation
+candles: volume breakout and trend pullback. The continuous runtime discovers supported pools for an exact token watchlist;
+the one-shot research job accepts a caller-supplied pool contract. The output is JSON with PASS, WAIT or BLOCKED, a reason, observation
 times, metrics and an illustrative price plan when eligible. A passing signal is
 research output, not an instruction or authorization to trade.
 
@@ -46,10 +46,12 @@ licensing or execution product is exploratory, not a current offer.
 
 ## Evidence available today
 
-- A local scanner, deterministic strategy engine and persistent simulation ledger.
+- A continuous wallet-free research runner, automatic pool discovery, both
+  strategy reports and a persistent simulation ledger. Run it with `npm start`;
+  no deposit, API key or inference credits are required.
 - A persistent ACP worker with request validation, duplicate protection, deadline
   checks and recovery records; its external CLI contract is documented.
-- 103 automated tests and 20 declared synthetic evaluation cases. These establish
+- 136 automated tests and 20 declared synthetic evaluation cases. These establish
   tested software behavior, not profitability or production reliability.
 - One bounded live-market probe and a local restart/outage check. The probe did
   not produce an eligible entry and does not establish broad data coverage.

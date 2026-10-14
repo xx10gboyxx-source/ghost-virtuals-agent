@@ -1,4 +1,4 @@
-# GhOsT v0.3 reviewer guide
+# GhOsT v0.4 reviewer guide
 
 GhOsT is a Base meme-coin research and paper-trading agent prototype. Its active
 workflow evaluates spot tokens. It no longer runs the BTC outcome-contract strategy.
@@ -10,17 +10,20 @@ Node.js 24+, no key, wallet, external dependencies or funds:
 ```sh
 npm test
 npm run demo
+npm run runtime:demo
 npm run agent:demo
 npm run evaluate
 npm run check:public
 ```
 
-103 automated tests pass, covering feed, strategy, simulation recovery, ACP jobs,
+136 automated tests pass, covering feed, strategy, simulation recovery, ACP jobs,
 readiness, reporting and research tasks. The evaluation has 20 declared synthetic cases. Tests use
 synthetic responses; no live-provider quality or investment performance is measured.
 
 | Capability | Implementation | Evidence |
 | --- | --- | --- |
+| Continuous no-money research | `agent/runtime.mjs` + `agent/run.mjs` | Runtime lifecycle, recovery, report and rate-budget tests |
+| Automatic token-pool discovery | `server/pool-discovery.mjs` | Identity, liquidity selection, timeout and cache tests |
 | Base spot identity and pool data | `server/base-meme-feed.mjs` | Feed identity, parsing, timeout and rate-limit tests |
 | Token-risk evidence | Same feed + `server/meme-strategy.mjs` | Missing/flagged risk, tax, holders and source tests |
 | Volume breakout and trend pullback | `evaluateMeme` | Both eligible fixtures, chase/volume/history rejection |

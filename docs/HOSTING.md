@@ -1,4 +1,9 @@
-# GhOsT simulation launch checklist
+# GhOsT host evidence and legacy launch checklist
+
+**For the current v0.4 no-money runner, use `npm start` and
+[OPERATING.md](OPERATING.md).** The steps below record the earlier low-level
+operator integration checks. Funding and inference credits are not required
+for the current local research/simulation runtime.
 
 The repository does not provision a server. A successful feed check is not a
 running hosted agent, and a running Virtuals template is not proof that this
