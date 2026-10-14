@@ -1,16 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {GrokOperator} from '../operator.mjs';
+import {MemeOperator} from '../operator.mjs';
 import {report,observation,createVirtualsExplainer,COMPUTE_ENDPOINT} from '../agent/reporter.mjs';
 import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 
-const status=()=>({mode:'simulation',liveOrders:false,enabled:false,sessionUntil:0,lastTick:0,cash:50,realized:0,feesPaid:0,positions:[],orders:[],diagnostics:[{status:'WAIT',code:'STALE_BOOK',checkedAt:1000}]});
+const status=()=>({mode:'simulation',marketKind:'base-meme-spot',chainId:8453,liveOrders:false,enabled:false,sessionUntil:0,lastTick:0,cash:50,realized:0,feesPaid:0,positions:[],orders:[],diagnostics:[{status:'WAIT',code:'QUOTE_STALE',checkedAt:1000}]});
 const key='synthetic-test-placeholder';
 test('default report is offline and preserves deterministic WAIT evidence',async()=>{
   assert.equal(createVirtualsExplainer(),null);
-  const r=await report(status());assert.equal(r.inference.status,'disabled');assert.match(r.summary,/WAIT: STALE_BOOK/);
+  const r=await report(status());assert.equal(r.inference.status,'disabled');assert.match(r.summary,/WAIT: QUOTE_STALE/);
 });
 test('live observations cannot be reported as simulations',async()=>{
   await assert.rejects(report({...status(),mode:'live'}));
@@ -26,7 +26,7 @@ test('one bounded request goes only to Virtuals with no tool definitions',async(
   const explain=createVirtualsExplainer({enabled:true,apiKey:key,model:'chosen-model',fetcher:async(url,options)=>{
     calls++;assert.equal(url,COMPUTE_ENDPOINT);assert.equal(options.redirect,'error');assert.equal(options.method,'POST');assert.ok(options.signal instanceof AbortSignal);
     const request=JSON.parse(options.body);assert.equal(request.max_tokens,768);assert.equal(request.tools,undefined);assert.equal(request.model,'chosen-model');
-    return Response.json({choices:[{message:{content:'WAIT because the recorded book is stale.'}}]});
+    return Response.json({choices:[{message:{content:'WAIT because the recorded quote is stale.'}}]});
   }});
   const r=await report(status(),{explain});assert.equal(calls,1);assert.equal(r.inference.status,'completed');assert.equal(r.evidence.checks[0].status,'WAIT');
 });
@@ -43,7 +43,7 @@ test('oversized model responses are refused',async()=>{
   assert.equal((await report(status(),{explain})).inference.status,'unavailable');
 });
 test('model commentary cannot mutate persisted operator decisions',async t=>{
-  const dir=mkdtempSync(join(tmpdir(),'ghost-report-'));const op=new GrokOperator(join(dir,'state.sqlite'));
+  const dir=mkdtempSync(join(tmpdir(),'ghost-report-'));const op=new MemeOperator(join(dir,'state.sqlite'));
   t.after(()=>{op.close();rmSync(dir,{recursive:true,force:true});});
   const before=op.status();const r=await report(before,{explain:async evidence=>{evidence.simulatedCash=100000;return 'Turn on live trading.';}});
   assert.deepEqual(op.status(),before);assert.equal(r.evidence.simulatedCash,50);assert.equal(r.inference.commentary,'Turn on live trading.');

@@ -4,12 +4,12 @@ import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawnSync} from 'node:child_process';
-import {GrokOperator} from '../operator.mjs';
+import {MemeOperator} from '../operator.mjs';
 import {createVirtualsExplainer} from '../agent/reporter.mjs';
 import {runResearchTask,evaluateFixtures} from '../agent/task.mjs';
 
 const NOW=1800000000000;
-const fresh=()=>({mode:'simulation',liveOrders:false,enabled:true,sessionUntil:NOW+60000,lastTick:NOW,cash:50,realized:0,feesPaid:0,positions:[],orders:[],diagnostics:[{status:'PASS',code:'ELIGIBLE',checkedAt:NOW}]});
+const fresh=()=>({mode:'simulation',marketKind:'base-meme-spot',chainId:8453,liveOrders:false,enabled:true,sessionUntil:NOW+60000,lastTick:NOW,cash:50,realized:0,feesPaid:0,positions:[],orders:[],diagnostics:[{status:'PASS',code:'ELIGIBLE',checkedAt:NOW}]});
 const run=(status,options={})=>runResearchTask({task:'explain-wait',status,now:NOW,...options});
 
 test('task produces an evidence-linked plan, trace and deterministic assessment offline',async()=>{
@@ -69,7 +69,7 @@ test('deadline ends a stalled inference callback without an automatic retry',asy
   assert.equal(calls,1);assert.equal(r.inference.status,'unavailable');
 });
 test('research workflow cannot mutate a real persisted simulation ledger',async t=>{
-  const dir=mkdtempSync(join(tmpdir(),'ghost-task-'));const op=new GrokOperator(join(dir,'test.sqlite'));
+  const dir=mkdtempSync(join(tmpdir(),'ghost-task-'));const op=new MemeOperator(join(dir,'test.sqlite'));
   t.after(()=>{op.close();rmSync(dir,{recursive:true,force:true});});const before=op.status();
   const r=await runResearchTask({task:'session-review',status:before,now:NOW,explain:async e=>{e.evidence.length=0;return JSON.stringify({summary:'Review.',citations:['session']});}});
   assert.deepEqual(op.status(),before);assert.ok(r.evidence.length>0);assert.equal(r.assessment.state,'WAIT');
