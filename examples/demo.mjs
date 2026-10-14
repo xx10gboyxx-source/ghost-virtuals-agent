@@ -25,6 +25,5 @@ try {
   now+=5000;await operator.action('tick');await capture('Later synthetic book: simulated fill');
   yes=.84;no=.18;now+=5000;await operator.action('tick');await capture('Protective exit: pending');
   now+=5000;await operator.action('tick');await capture('Later book: simulated exit; same-window re-entry blocked');
-  process.stdout.write(JSON.stringify({fixture:'SYNTHETIC_OFFLINE_DEMO',liveOrders:false,modelCalls:0,steps},null,2)+'
-');
+  process.stdout.write(JSON.stringify({fixture:'SYNTHETIC_OFFLINE_DEMO',liveOrders:false,modelCalls:0,steps},null,2)+'\n');
 } finally {operator.close();rmSync(directory,{recursive:true,force:true});}
