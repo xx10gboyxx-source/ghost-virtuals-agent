@@ -1,138 +1,125 @@
-# GhOsT · Virtuals Agent
+# GhOsT · Base Meme-Coin Agent
 
 [![Verify public agent](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml/badge.svg)](https://github.com/xx10gboyxx-source/ghost-virtuals-agent/actions/workflows/verify.yml)
 
-**Clarity before the trade.** A public, runnable research prototype for disciplined
-market evaluation, persistent simulation state, and explainable agent reports.
+**Research the token. Explain the risk. Test the strategy.**
+GhOsT v0.3 is a Base meme-coin research and paper-trading prototype for traders,
+research teams and builders in the Virtuals ecosystem.
 
 [Virtuals project](https://app.virtuals.io/virtuals/143409) ·
-[Creator updates](https://x.com/PulseLayerAI) ·
-[Agent evidence](docs/AGENT.md) · [Evaluation](docs/EVALUATION.md)
+[Creator](https://x.com/PulseLayerAI) · [Reviewer guide](docs/REVIEW_GUIDE.md)
 
-**Review the current implementation:** [v0.2 reviewer guide](docs/REVIEW_GUIDE.md).
-It maps each capability to runnable code and a specific verification command.
+## What works
 
-## Research agent v0.2
+- **Volume breakout:** closed 5-minute candle breaks the prior 20-candle high,
+  with at least 2× average volume and an upward EMA trend; excessive chase is rejected.
+- **Trend pullback:** bullish recovery near EMA20, with EMA20 above EMA50,
+  RSI between 45 and 68, and at least 1.2× average volume.
+- **Token-risk screening:** Base contract identity, supplied GoPlus honeypot,
+  sell restriction, mint/proxy/owner-control flags, taxes and holder concentration.
+  Unknown or incomplete evidence prevents entry.
+- **Pool checks:** fresh quote, at least $100k reported liquidity, $50k daily
+  volume, 48-hour pool age, complete candle history and quote/close consistency.
+- **Paper execution:** later-quote entries and exits, cost-aware sizing, persisted
+  SQLite state, stop/target logic, session deadline and loss locks.
+- **Research reports:** bounded `explain-wait` and `session-review` tasks with
+  evidence IDs and optional read-only Virtuals Compute explanations.
 
-Run a bounded task that observes simulation state, invokes two local read-only
-inspection tools, checks freshness and session validity, produces an evidence-linked
-assessment, and optionally asks Virtuals Compute for a cited explanation:
-
-```sh
-npm run agent:demo
-npm run evaluate
-npm run agent -- explain-wait ./state/ghost-grok.sqlite
-npm run agent -- session-review ./state/ghost-grok.sqlite
-```
-
-The two demo/evaluation commands are always offline, even if inference is enabled
-in the environment. Other tasks require explicit inference configuration before
-making a provider request. No task starts a session or fetches a market feed.
-
-Task results include the fixed plan, tool trace, source IDs, and a deterministic
-PASS/WAIT/BLOCKED assessment. Missing, stale or future-dated observations cannot
-produce PASS. Model responses must be JSON with a summary and valid evidence IDs;
-extra fields, nonexistent citations and tool calls are rejected. Valid citations
-do not guarantee correct prose: AI text remains untrusted commentary and never
-controls the engine. PASS describes recorded checks, not permission to trade.
-
-The current suite has **29 tests** and a separate **10-case synthetic behavior
-evaluation**. Provider responses in tests are synthetic; real inference quality
-and credit-program approval have not been demonstrated. Inspect a
-[task example](examples/research-task.json) or the
-[evaluation results](examples/task-evaluation.json).
+These are experimental rules, not a proven investment edge. Thresholds are research
+settings. “Meme coin” is a user-selected token category; the software cannot infer
+that identity from a ticker. An operator must select exact Base pool contracts.
 
 ## Current status
 
-**Early prototype — not deployed to a Virtuals host; no autonomous live trading.**
-The repository contains working simulation code, an offline demonstration,
-automated tests, and an optional Virtuals Compute reporting client. Hosted runtime,
-real-provider inference, live market-data integration and paid ACP services have
-not been validated for this standalone package. No win rate or investment return
-is claimed. The GHOST Base token and this BTC simulation are different things.
+**Paper trading only. Not deployed for unattended operation.** The package has no
+wallet signer, live swap executor or paid ACP job service. Live provider responses,
+actual trade fills, real inference quality and profitability remain unvalidated.
+Adding money or compute credits does not activate trading.
 
-## Run the evidence yourself
+The active commands use **Base spot tokens**, not BTC 15-minute outcome contracts.
+Two old `server/polymarket-*` files remain solely as historical source excerpts;
+they are not imported by the v0.3 operator. Old BTC ledgers are explicitly rejected.
+No xAI Grok connection is claimed. The GHOST project token is not automatically a
+trading target, and the project does not promise returns to token holders.
 
-Requires Node.js 24 or newer. No npm dependencies, account, API key or funds are
-needed for these commands:
+## Run the evidence
+
+Node.js 24+, no dependencies, wallet, API key or funds required:
 
 ```sh
 git clone https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git
 cd ghost-virtuals-agent
 npm test
 npm run demo
+npm run agent:demo
+npm run evaluate
 npm run check:public
 ```
 
-The demo creates a temporary SQLite ledger, starts a simulation against synthetic
-BTC outcome-contract books, records an entry, waits for a later book to simulate a
-fill, evaluates an exit, and blocks same-window re-entry. It removes its temporary
-ledger afterward. Output is labelled `SYNTHETIC_OFFLINE_DEMO`; no network or model
-calls are made. A committed example is in [examples/demo-output.json](examples/demo-output.json).
+The current suite has **59 tests** and **20 synthetic evaluation cases** (10 agent
+reporting cases and 10 meme-market screening cases). These test software behavior,
+not investment performance. The offline demo follows a synthetic token entry and
+exit; all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).
 
-## What the agent does
+## Run a local paper session
 
-| Component | Implemented behavior | Evidence |
-| --- | --- | --- |
-| Observation | Read public BTC/BRTI 15-minute market terms and books through a bounded feed adapter | `server/polymarket-us-feed.mjs`; live connectivity unverified |
-| Evaluation | Deterministic entry, freshness, fee, budget and exit checks | `server/polymarket-crypto-engine.mjs`, operator tests |
-| Memory | SQLite simulation ledger, fixed session deadline, durable worker lease | `operator.mjs`, restart/concurrency tests |
-| Reporting | Structured observation and PASS/WAIT/BLOCKED explanations | `agent/reporter.mjs`, reporting tests |
-| Optional inference | One bounded, read-only Virtuals Compute explanation per explicit report request | `agent/reporter.mjs`; provider responses mocked in tests |
-
-This is a constrained agent workflow: observe → evaluate → retain state → explain.
-The deterministic engine decides simulation behavior. AI commentary cannot submit
-orders, change risk limits, extend sessions or access wallet signers. It is not a
-general-purpose autonomous agent or a hosted ACP job service.
-
-## Strategy and operating limits
-
-The included `grok_high_prob` strategy is GhOsT's existing deterministic experiment.
-**Its name does not mean an xAI Grok integration or a calibrated probability.**
-It evaluates YES/UP and NO/DOWN offers in eligible BTC 15-minute outcome contracts,
-using an initial offer band of $0.55–$0.85. Do not apply this band to GHOST or spot
-coin prices. The broader Base-market / 5-minute-confirmation product is a roadmap
-item, not functionality demonstrated by this package.
-
-Initial simulated limits: $50 ledger; $5 maximum stake; $20 maximum exposure;
-three positions; three pending orders; $10 rolling loss budget; $50 session spend.
-Books must be fresh within 15 seconds. New entries require more than 90 seconds
-remaining. Exit checks use +15% net take-profit, −20% net stop, or 45 seconds to
-expiry; fills and exits are never assumed without eligible later depth. Official
-settlement is required where applicable. These settings are experimental, not a
-recommendation.
+Set `GHOST_BASE_POOLS` in the process environment to one or two full Base pool
+contract addresses, separated by commas. Do not use a token address in place of a
+pool address. Only the pool's base-token side is supported. The empty default
+selects no assets and returns WAIT. No account or wallet is connected.
 
 ```sh
-node operator.mjs status ./state/ghost-grok.sqlite
-node operator.mjs start ./state/ghost-grok.sqlite
-node operator.mjs run ./state/ghost-grok.sqlite
-node operator.mjs pause ./state/ghost-grok.sqlite
-npm run report -- ./state/ghost-grok.sqlite
+node operator.mjs status ./state/ghost-meme.sqlite
+node operator.mjs start ./state/ghost-meme.sqlite volume-breakout
+node operator.mjs run ./state/ghost-meme.sqlite
+node operator.mjs pause ./state/ghost-meme.sqlite
+npm run agent -- session-review ./state/ghost-meme.sqlite
 ```
 
-`status` and `report` do not fetch markets. `tick` and `run` use the public feed.
-`start` explicitly begins a four-hour simulation; `run` never starts or renews it.
-`pause` cancels pending buys and stops new entries. Existing positions still need
-a running worker for exit/settlement checks. Use one private persistent database
-path. Never publish runtime state. This repository does not deploy a host.
+To research `trend-pullback`, create a separate new paper database with that
+strategy argument. The strategy is saved on first creation. `run` resumes the
+stored strategy; it never starts or renews a session. Keep private runtime databases
+outside public source. A host must stay running for checks; this repository does
+not install or deploy one.
 
-## Optional AI explanation
+Initial paper capital is $50. Modeled per-entry risk is 0.5% of observed equity;
+maximum buy notional including proportional costs is $5, plus $0.02 estimated gas.
+Only one position is modeled at a time. A four-hour session has a $50 cumulative
+spend limit. A $1.50 UTC-day observed-equity loss or $5 observed-equity drawdown
+locks new entries; restarting a session does not clear the lock.
 
-Inference is disabled by default. After obtaining approved Virtuals Compute
-access, configure the process privately with `VIRTUALS_API_KEY`, a current
-`VIRTUALS_MODEL`, and `GHOST_ENABLE_INFERENCE=true`, then request one report. The
-model ID must come from the current Virtuals model list. Calls may consume credits;
-there are no automatic retries, purchases or top-ups. See
-[docs/INFERENCE.md](docs/INFERENCE.md) for the exact boundary and remaining tests.
+Stop distance is the greater of 2× ATR14 and 3%, capped at 10%; target is 2× that
+price distance. Modeled costs include 0.3% fee, 1% slippage, supplied token taxes
+and $0.02 gas per fill. Stops request a later simulated sale and do not guarantee
+price or cap loss. Gaps can exceed the modeled risk budget. Pending buys expire
+after three minutes. Pause cancels pending buys; an active worker is still needed
+for existing position checks. Unknown sale evidence keeps positions unresolved.
 
-## Build with GhOsT
+## Data and model boundaries
 
-Open to reproducible bug reports, research comparisons, pilot feedback and
-collaboration with traders, companies, and Virtuals/Base builders. Use Issues for
-non-sensitive technical discussion or contact [@PulseLayerAI](https://x.com/PulseLayerAI).
-Never post keys, private logs, account identifiers or wallet seed phrases.
+The unsigned feed reads selected Base pools and closed 5-minute OHLCV from
+GeckoTerminal, and token-risk data from GoPlus. It uses fixed origins, response
+limits, deadlines, caches, a per-process eight-request/minute budget and 429
+cooldowns. It makes no paid fallback requests. Provider limits can change.
 
-Source is public for inspection. No open-source license is granted at this stage;
-see [NOTICE](NOTICE). This standalone repository does not publish the main private
-GhOsT application or its customer data. Public code and tests support review; they
-do not guarantee credit-program acceptance.
+Quote timestamps describe retrieval, not an independently authenticated trade.
+Security reports may be incomplete, wrong or stale; screening cannot guarantee
+sellability or prevent rug pulls. Holder concentration includes reported LP/burn
+addresses conservatively. A missing required flag returns WAIT. Actual liquidity,
+route-level price impact, MEV, market manipulation and wallet reconciliation are
+not modeled reliably. This version requires conventional 20-byte pool addresses.
+
+AI is disabled by default. Optional Virtuals inference can explain sanitized
+recorded evidence but cannot change orders, budgets or permissions. Model text
+remains untrusted even when its citation IDs are valid. [Configuration](docs/INFERENCE.md).
+
+## Collaborate
+
+We welcome reproducible bugs, strategy research, data-quality comparisons and
+paper-trading feedback from companies, traders and Virtuals/Base builders.
+Contact [@PulseLayerAI](https://x.com/PulseLayerAI) or use public Issues for
+non-sensitive technical discussion. No sponsorship, customers, profits or credit
+approval are claimed.
+
+Source is public for inspection under [NOTICE](NOTICE); no open-source license is
+granted. The main private GhOsT app and private account data are not included.

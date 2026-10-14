@@ -1,15 +1,16 @@
 {
-  "origin": "GhOsT source implementation excerpt",
+  "origin": "GhOsT v0.3 Base meme-coin research and paper-trading implementation",
   "sourceCommit": "837ac392bd5e1c378fb635ad548fd260a46996af",
-  "unchangedSourceFiles": {
+  "adaptations": [
+    "v0.3 active operator imports only Base meme feed and strategy",
+    "legacy BTC ledger is rejected instead of migrated",
+    "read-only research workflow retained with Base spot metadata"
+  ],
+  "runtimeStatus": "NOT_DEPLOYED",
+  "evaluation": "synthetic only",
+  "retainedHistoricalSourceFiles": {
     "server/polymarket-crypto-engine.mjs": "19d108125a15c382c304d5cce678ae8419eb1ab457943cb91f3c28230f3b9485",
     "server/polymarket-us-feed.mjs": "5e6ea8ae64af59e690055805ea6bd380b8b2467a587adf226040ecd1400cc926"
   },
-  "adaptations": [
-    "operator.mjs removes account-specific identifiers and retains isolated simulation state",
-    "server/request-security.mjs includes only the bounded UTF-8 response reader",
-    "agent/ and reporting tests are new public prototype code"
-  ],
-  "runtimeStatus": "NOT_DEPLOYED",
-  "evaluation": "synthetic only"
+  "historicalModulesActive": false
 }

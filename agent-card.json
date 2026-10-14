@@ -1,13 +1,24 @@
 {
   "name": "GhOsT",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "kind": "project-metadata-not-a-protocol-advertisement",
-  "description": "Constrained simulation and market-research reporting agent prototype",
+  "description": "Base meme-coin research and paper trading with volume-breakout and trend-pullback strategies",
   "projectUrl": "https://app.virtuals.io/virtuals/143409",
   "repository": "https://github.com/xx10gboyxx-source/ghost-virtuals-agent",
   "status": "prototype-not-hosted",
-  "capabilities": ["simulation-evaluation", "persistent-ledger", "risk-diagnostics", "bounded-research-tasks", "evidence-linked-reports", "optional-read-only-inference"],
-  "tasks": ["explain-wait", "session-review"],
+  "capabilities": [
+    "base-pool-market-data",
+    "token-risk-screening",
+    "closed-candle-signals",
+    "paper-trading",
+    "persistent-ledger",
+    "evidence-linked-reports",
+    "optional-read-only-inference"
+  ],
+  "tasks": [
+    "explain-wait",
+    "session-review"
+  ],
   "taskEntryPoint": "agent/task.mjs",
   "reviewGuide": "docs/REVIEW_GUIDE.md",
   "evaluationCommand": "npm run evaluate",
@@ -16,5 +27,12 @@
   "liveOrders": false,
   "walletSigning": false,
   "acpServiceImplemented": false,
-  "evaluation": "synthetic-tests-and-offline-demo"
+  "evaluation": "synthetic-tests-and-offline-demo",
+  "chainId": 8453,
+  "marketKind": "base-meme-spot",
+  "strategies": [
+    "volume-breakout",
+    "trend-pullback"
+  ],
+  "liveMarketDataValidated": false
 }

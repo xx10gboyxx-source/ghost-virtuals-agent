@@ -1,15 +1,25 @@
 {
   "name": "ghost-virtuals-agent",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Public GhOsT simulation agent prototype with optional read-only Virtuals Compute explanations",
+  "description": "GhOsT Base meme-coin research and paper-trading agent with token-risk screening and evidence-linked reports",
   "type": "module",
   "engines": {
     "node": ">=24"
   },
   "license": "UNLICENSED",
-  "repository": {"type":"git","url":"https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git"},
-  "keywords": ["ai-agent","virtuals-protocol","research-agent","simulation","explainable-ai"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git"
+  },
+  "keywords": [
+    "ai-agent",
+    "virtuals-protocol",
+    "base",
+    "meme-coins",
+    "paper-trading",
+    "risk-screening"
+  ],
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "demo": "node examples/demo.mjs",
@@ -17,7 +27,7 @@
     "report": "node agent/cli.mjs",
     "agent": "node agent/task.mjs",
     "agent:demo": "node agent/task.mjs --demo",
-    "evaluate": "node agent/task.mjs --evaluate",
+    "evaluate": "node agent/task.mjs --evaluate && node examples/evaluate-meme.mjs",
     "check:public": "node scripts/check-public.mjs"
   }
 }
