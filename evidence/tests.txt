@@ -1,0 +1,24 @@
+✔ fresh install is paused with $50 simulated capital; live actions rejected (5.145775ms)
+✔ exact Grok strategy picks DOWN and only a later book fills it; ledger survives reopening (8.617502ms)
+✔ stale books cannot place orders (2.722431ms)
+✔ concurrent operator cannot change a leased ledger (10.009264ms)
+✔ take-profit sells owned UP contracts and prevents re-entry in same window (6.805268ms)
+✔ session expires at four hours and is not automatically renewed (2.556052ms)
+✔ no verified market returns WAIT without invented fills (2.38824ms)
+✔ default report is offline and preserves deterministic WAIT evidence (1.448968ms)
+✔ live observations cannot be reported as simulations (0.415094ms)
+✔ only allowed structured evidence reaches inference (0.336926ms)
+✔ one bounded request goes only to Virtuals with no tool definitions (5.773228ms)
+✔ provider errors fail closed without exposing credential-shaped error text (0.391248ms)
+✔ tool calls are rejected, never executed (0.735305ms)
+✔ oversized model responses are refused (0.976507ms)
+✔ model commentary cannot mutate persisted operator decisions (4.645452ms)
+✔ explicit inference requires credentials and a selected model (0.271528ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 128.241978
