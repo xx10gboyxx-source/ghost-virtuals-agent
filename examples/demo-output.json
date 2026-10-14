@@ -1,15 +1,19 @@
 {
-  "fixture": "SYNTHETIC_OFFLINE_DEMO",
+  "fixture": "SYNTHETIC_BASE_MEME_DEMO",
+  "marketKind": "base-meme-spot",
   "liveOrders": false,
   "modelCalls": 0,
   "steps": [
     {
-      "step": "Fresh install: paused",
+      "step": "Base meme-coin paper account starts paused",
       "agent": "GhOsT",
       "goal": "Explain the recorded simulation state and its risk checks.",
       "evidence": {
         "mode": "simulation",
         "liveOrders": false,
+        "marketKind": "base-meme-spot",
+        "chainId": 8453,
+        "strategy": "volume-breakout",
         "enabled": false,
         "sessionUntil": 0,
         "lastTick": 0,
@@ -32,15 +36,18 @@
       ]
     },
     {
-      "step": "Eligible synthetic entry: pending, not filled",
+      "step": "Synthetic volume breakout creates a pending spot entry",
       "agent": "GhOsT",
       "goal": "Explain the recorded simulation state and its risk checks.",
       "evidence": {
         "mode": "simulation",
         "liveOrders": false,
+        "marketKind": "base-meme-spot",
+        "chainId": 8453,
+        "strategy": "volume-breakout",
         "enabled": true,
-        "sessionUntil": 1767240000000,
-        "lastTick": 1767225600000,
+        "sessionUntil": 1767283200000,
+        "lastTick": 1767268800000,
         "simulatedCash": 50,
         "simulatedRealized": 0,
         "simulatedFees": 0,
@@ -48,19 +55,24 @@
         "orders": [
           {
             "action": "BUY",
-            "side": "YES",
+            "side": "SPOT",
             "status": "PENDING"
           }
         ],
         "checks": [
           {
             "status": "PASS",
-            "code": "ORDER_SUBMITTED",
-            "checkedAt": 1767225600000
+            "code": "SCREEN_PASSED",
+            "checkedAt": 1767268800000
+          },
+          {
+            "status": "PASS",
+            "code": "PAPER_SIGNAL",
+            "checkedAt": 1767268800000
           }
         ]
       },
-      "summary": "Simulation session enabled; 0 open position(s). PASS: ORDER_SUBMITTED",
+      "summary": "Simulation session enabled; 0 open position(s). PASS: SCREEN_PASSED; PASS: PAPER_SIGNAL",
       "inference": {
         "status": "disabled",
         "commentary": null
@@ -72,40 +84,38 @@
       ]
     },
     {
-      "step": "Later synthetic book: simulated fill",
+      "step": "Later quote models the entry and its costs",
       "agent": "GhOsT",
       "goal": "Explain the recorded simulation state and its risk checks.",
       "evidence": {
         "mode": "simulation",
         "liveOrders": false,
+        "marketKind": "base-meme-spot",
+        "chainId": 8453,
+        "strategy": "volume-breakout",
         "enabled": true,
-        "sessionUntil": 1767240000000,
-        "lastTick": 1767225605000,
-        "simulatedCash": 45.33,
+        "sessionUntil": 1767283200000,
+        "lastTick": 1767268815000,
+        "simulatedCash": 46.154557505812704,
         "simulatedRealized": 0,
-        "simulatedFees": 0.12,
+        "simulatedFees": 0.06920438259405959,
         "positions": 1,
         "orders": [
           {
             "action": "BUY",
-            "side": "YES",
+            "side": "SPOT",
             "status": "FILLED"
           }
         ],
         "checks": [
           {
-            "status": "WAIT",
-            "code": "POSITION_OPEN",
-            "checkedAt": 1767225605000
-          },
-          {
-            "status": "WAIT",
-            "code": "POSITION_MONITORING",
-            "checkedAt": 1767225605000
+            "status": "PASS",
+            "code": "SCREEN_PASSED",
+            "checkedAt": 1767268815000
           }
         ]
       },
-      "summary": "Simulation session enabled; 1 open position(s). WAIT: POSITION_OPEN; WAIT: POSITION_MONITORING",
+      "summary": "Simulation session enabled; 1 open position(s). PASS: SCREEN_PASSED",
       "inference": {
         "status": "disabled",
         "commentary": null
@@ -117,45 +127,43 @@
       ]
     },
     {
-      "step": "Protective exit: pending",
+      "step": "Target requests a paper sale",
       "agent": "GhOsT",
       "goal": "Explain the recorded simulation state and its risk checks.",
       "evidence": {
         "mode": "simulation",
         "liveOrders": false,
+        "marketKind": "base-meme-spot",
+        "chainId": 8453,
+        "strategy": "volume-breakout",
         "enabled": true,
-        "sessionUntil": 1767240000000,
-        "lastTick": 1767225610000,
-        "simulatedCash": 45.33,
+        "sessionUntil": 1767283200000,
+        "lastTick": 1767268830000,
+        "simulatedCash": 46.154557505812704,
         "simulatedRealized": 0,
-        "simulatedFees": 0.12,
+        "simulatedFees": 0.06920438259405959,
         "positions": 1,
         "orders": [
-          {
-            "action": "BUY",
-            "side": "YES",
-            "status": "FILLED"
-          },
           {
             "action": "SELL",
-            "side": "YES",
+            "side": "SPOT",
             "status": "PENDING"
+          },
+          {
+            "action": "BUY",
+            "side": "SPOT",
+            "status": "FILLED"
           }
         ],
         "checks": [
           {
-            "status": "WAIT",
-            "code": "PENDING_ORDER",
-            "checkedAt": 1767225610000
-          },
-          {
-            "status": "WAIT",
-            "code": "EXIT_PENDING",
-            "checkedAt": 1767225610000
+            "status": "PASS",
+            "code": "SCREEN_PASSED",
+            "checkedAt": 1767268830000
           }
         ]
       },
-      "summary": "Simulation session enabled; 1 open position(s). WAIT: PENDING_ORDER; WAIT: EXIT_PENDING",
+      "summary": "Simulation session enabled; 1 open position(s). PASS: SCREEN_PASSED",
       "inference": {
         "status": "disabled",
         "commentary": null
@@ -167,40 +175,43 @@
       ]
     },
     {
-      "step": "Later book: simulated exit; same-window re-entry blocked",
+      "step": "Later quote models the exit",
       "agent": "GhOsT",
       "goal": "Explain the recorded simulation state and its risk checks.",
       "evidence": {
         "mode": "simulation",
         "liveOrders": false,
+        "marketKind": "base-meme-spot",
+        "chainId": 8453,
+        "strategy": "volume-breakout",
         "enabled": true,
-        "sessionUntil": 1767240000000,
-        "lastTick": 1767225615000,
-        "simulatedCash": 50.99,
-        "simulatedRealized": 0.99,
-        "simulatedFees": 0.2,
+        "sessionUntil": 1767283200000,
+        "lastTick": 1767268845000,
+        "simulatedCash": 50.12496238651055,
+        "simulatedRealized": 0.12496238651055824,
+        "simulatedFees": 0.14164002416792387,
         "positions": 0,
         "orders": [
           {
-            "action": "BUY",
-            "side": "YES",
+            "action": "SELL",
+            "side": "SPOT",
             "status": "FILLED"
           },
           {
-            "action": "SELL",
-            "side": "YES",
+            "action": "BUY",
+            "side": "SPOT",
             "status": "FILLED"
           }
         ],
         "checks": [
           {
-            "status": "BLOCKED",
-            "code": "WINDOW_ALREADY_ENTERED",
-            "checkedAt": 1767225615000
+            "status": "PASS",
+            "code": "SCREEN_PASSED",
+            "checkedAt": 1767268845000
           }
         ]
       },
-      "summary": "Simulation session enabled; 0 open position(s). BLOCKED: WINDOW_ALREADY_ENTERED",
+      "summary": "Simulation session enabled; 0 open position(s). PASS: SCREEN_PASSED",
       "inference": {
         "status": "disabled",
         "commentary": null

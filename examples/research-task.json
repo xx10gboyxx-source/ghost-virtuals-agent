@@ -49,7 +49,7 @@
       "source": "recorded-diagnostic",
       "value": {
         "status": "WAIT",
-        "code": "STALE_BOOK",
+        "code": "STALE_MARKET_DATA",
         "checkedAt": 1800000000000,
         "fresh": true
       }
@@ -60,7 +60,7 @@
     "reasons": [
       {
         "state": "WAIT",
-        "code": "STALE_BOOK",
+        "code": "STALE_MARKET_DATA",
         "evidenceId": "check-1"
       }
     ],
