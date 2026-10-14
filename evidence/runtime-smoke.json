@@ -1,0 +1,143 @@
+{
+  "kind": "bounded-live-read-only-runtime-check",
+  "recordedAt": "2026-10-14T18:43:17.724Z",
+  "walletUsed": false,
+  "inferenceUsed": false,
+  "liveOrders": false,
+  "uninterruptedHostingProven": false,
+  "cycles": [
+    {
+      "checkedAt": 1792003228703,
+      "health": "RUNNING",
+      "marketData": "WAIT",
+      "selection": {
+        "source": "token-pools",
+        "status": "OK",
+        "code": "POOLS_DISCOVERED",
+        "pools": [
+          "0x4b0aaf3ebb163dd45f663b38b6d93f6093ebc2d3"
+        ],
+        "checkedAt": 1792003221695
+      },
+      "reports": [
+        {
+          "mode": "research",
+          "liveOrders": false,
+          "chainId": 8453,
+          "timeframe": "5m",
+          "poolAddress": "0x4b0aaf3ebb163dd45f663b38b6d93f6093ebc2d3",
+          "tokenAddress": null,
+          "strategy": "volume-breakout",
+          "status": "WAIT",
+          "code": "FEED_UNAVAILABLE",
+          "reason": "Exactly one requested pool snapshot is required.",
+          "checkedAt": 1792003228703,
+          "evidence": {
+            "quoteObservedAt": null,
+            "securityCheckedAt": null,
+            "latestClosedCandleAt": null
+          },
+          "metrics": {},
+          "plan": null
+        },
+        {
+          "mode": "research",
+          "liveOrders": false,
+          "chainId": 8453,
+          "timeframe": "5m",
+          "poolAddress": "0x4b0aaf3ebb163dd45f663b38b6d93f6093ebc2d3",
+          "tokenAddress": null,
+          "strategy": "trend-pullback",
+          "status": "WAIT",
+          "code": "FEED_UNAVAILABLE",
+          "reason": "Exactly one requested pool snapshot is required.",
+          "checkedAt": 1792003228703,
+          "evidence": {
+            "quoteObservedAt": null,
+            "securityCheckedAt": null,
+            "latestClosedCandleAt": null
+          },
+          "metrics": {},
+          "plan": null
+        }
+      ],
+      "simulatedCash": 50,
+      "orders": 0,
+      "positions": 0
+    },
+    {
+      "checkedAt": 1792003354421,
+      "health": "RUNNING",
+      "marketData": "OK",
+      "selection": {
+        "source": "token-pools",
+        "status": "OK",
+        "code": "POOLS_DISCOVERED",
+        "pools": [
+          "0x4b0aaf3ebb163dd45f663b38b6d93f6093ebc2d3"
+        ],
+        "checkedAt": 1792003346347
+      },
+      "reports": [
+        {
+          "mode": "research",
+          "liveOrders": false,
+          "chainId": 8453,
+          "timeframe": "5m",
+          "poolAddress": "0x4b0aaf3ebb163dd45f663b38b6d93f6093ebc2d3",
+          "tokenAddress": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4",
+          "strategy": "volume-breakout",
+          "status": "BLOCKED",
+          "code": "CONCENTRATION_LIMIT",
+          "reason": "Reported top-ten holder concentration exceeds the experimental 30% limit.",
+          "checkedAt": 1792003354420,
+          "evidence": {
+            "quoteObservedAt": 1792003349697,
+            "securityCheckedAt": 1792003350409,
+            "latestClosedCandleAt": 1791973200000
+          },
+          "metrics": {
+            "chainId": 8453,
+            "priceUsd": 0.00010757329054691,
+            "liquidityUsd": 1021775.2432,
+            "volume24hUsd": 3416.0184122897,
+            "quoteAgeMs": 4723,
+            "securityAgeMs": 4011
+          },
+          "plan": null
+        },
+        {
+          "mode": "research",
+          "liveOrders": false,
+          "chainId": 8453,
+          "timeframe": "5m",
+          "poolAddress": "0x4b0aaf3ebb163dd45f663b38b6d93f6093ebc2d3",
+          "tokenAddress": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4",
+          "strategy": "trend-pullback",
+          "status": "BLOCKED",
+          "code": "CONCENTRATION_LIMIT",
+          "reason": "Reported top-ten holder concentration exceeds the experimental 30% limit.",
+          "checkedAt": 1792003354421,
+          "evidence": {
+            "quoteObservedAt": 1792003349697,
+            "securityCheckedAt": 1792003350409,
+            "latestClosedCandleAt": 1791973200000
+          },
+          "metrics": {
+            "chainId": 8453,
+            "priceUsd": 0.00010757329054691,
+            "liquidityUsd": 1021775.2432,
+            "volume24hUsd": 3416.0184122897,
+            "quoteAgeMs": 4724,
+            "securityAgeMs": 4012
+          },
+          "plan": null
+        }
+      ],
+      "simulatedCash": 50,
+      "orders": 0,
+      "positions": 0
+    }
+  ],
+  "interpretation": "Pool discovery and later market retrieval succeeded. Both strategies blocked the observed pool on concentration. No eligible live entry or investment performance was demonstrated."
+}
