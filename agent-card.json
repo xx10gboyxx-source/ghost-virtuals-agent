@@ -1,0 +1,15 @@
+{
+  "name": "GhOsT",
+  "version": "0.1.0",
+  "kind": "project-metadata-not-a-protocol-advertisement",
+  "description": "Constrained simulation and market-research reporting agent prototype",
+  "projectUrl": "https://app.virtuals.io/virtuals/143409",
+  "repository": "https://github.com/xx10gboyxx-source/ghost-virtuals-agent",
+  "status": "prototype-not-hosted",
+  "capabilities": ["simulation-evaluation", "persistent-ledger", "risk-diagnostics", "optional-read-only-inference"],
+  "defaultInference": "disabled",
+  "liveOrders": false,
+  "walletSigning": false,
+  "acpServiceImplemented": false,
+  "evaluation": "synthetic-tests-and-offline-demo"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "ghost-virtuals-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Public GhOsT simulation agent prototype with optional read-only Virtuals Compute explanations",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "demo": "node examples/demo.mjs",
+    "status": "node operator.mjs status",
+    "report": "node agent/cli.mjs",
+    "check:public": "node scripts/check-public.mjs"
+  }
+}
