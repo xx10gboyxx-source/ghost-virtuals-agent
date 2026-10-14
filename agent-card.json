@@ -1,8 +1,8 @@
 {
   "name": "GhOsT",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "kind": "project-metadata-not-a-protocol-advertisement",
-  "description": "Base meme market intelligence: evidence-linked pool screening, closed-candle strategies and simulation for traders, research teams and agent builders",
+  "description": "Wallet-free continuous Base meme research, automatic pool discovery, two closed-candle strategies, saved reports and persistent simulation",
   "projectUrl": "https://app.virtuals.io/virtuals/143409",
   "repository": "https://github.com/xx10gboyxx-source/ghost-virtuals-agent",
   "status": "prototype-not-hosted",
@@ -15,7 +15,10 @@
     "evidence-linked-reports",
     "optional-read-only-inference",
     "persistent-acp-research-worker",
-    "read-only-funding-readiness-check"
+    "read-only-funding-readiness-check",
+    "automatic-token-pool-discovery",
+    "continuous-wallet-free-research",
+    "persistent-cycle-reports"
   ],
   "tasks": [
     "explain-wait",
@@ -53,5 +56,11 @@
     "strategic-partners"
   ],
   "tokenTradeSigning": false,
-  "acpSigning": "delegated-to-externally-authenticated-official-cli; unverified-on-host"
+  "acpSigning": "delegated-to-externally-authenticated-official-cli; unverified-on-host",
+  "runtimeEntryPoint": "agent/run.mjs",
+  "startCommand": "npm start",
+  "operatingGuide": "docs/OPERATING.md",
+  "runtimeWalletRequired": false,
+  "runtimeFundingRequired": false,
+  "runtimeInferenceRequired": false
 }
