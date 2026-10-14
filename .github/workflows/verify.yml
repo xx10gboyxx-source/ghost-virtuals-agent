@@ -12,5 +12,6 @@ jobs:
         with:
           node-version: '24'
       - run: npm test
+      - run: npm run evaluate
       - run: npm run check:public
       - run: node examples/demo.mjs > /tmp/ghost-demo.json
