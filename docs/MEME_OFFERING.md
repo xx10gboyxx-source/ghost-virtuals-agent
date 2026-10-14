@@ -41,12 +41,16 @@ These statuses must remain distinct from successful ACP job delivery.
 
 ## Remaining service activation
 
-This adapter is **not an ACP job listener or hosted deployment**. A future worker
-must validate requests before accepting a paid job, apply a shared queue/rate
-budget (the one-shot command does not share feed caches across processes), protect
-ACP credentials, enforce idempotency and deadlines, and verify signed delivery and
-failure/refund behavior. Complete an end-to-end sandbox job before making the
-offering public. Do not expose this CLI directly as an unbounded network service.
+The one-shot scanner is not itself a listener. The new
+[`agent/acp-cli.mjs` worker](ACP_WORKER.md) connects it to official ACP CLI 1.0.40,
+validates jobs, shares request budgets, journals signed-action intent, checks
+deadlines, and prevents blind duplicate submissions. Local tests cover the full
+simulated lifecycle through a child-process CLI fixture. Hosting, authenticated
+signing and real platform delivery remain unverified. Complete the documented
+integration and restart checks before making the offering public. The provider
+cannot automatically refund jobs through this CLI; evaluator settlement and
+manual failure resolution must be verified. Do not expose the one-shot scanner
+directly as an unbounded network service.
 
 “No stats yet” on Virtuals remains accurate until the platform records actual
 completed jobs. Local tests and simulated trades are not ACP transactions and
