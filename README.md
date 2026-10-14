@@ -58,10 +58,18 @@ npm run evaluate
 npm run check:public
 ```
 
-The current suite has **59 tests** and **20 synthetic evaluation cases** (10 agent
+The current suite has **66 tests** and **20 synthetic evaluation cases** (10 agent
 reporting cases and 10 meme-market screening cases). These test software behavior,
 not investment performance. The offline demo follows a synthetic token entry and
 exit; all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).
+
+## Meme-scan job definition
+
+`ghost_base_meme_scan` is the staged EconomyOS research offering. Its matching
+one-shot JSON command is `node agent/meme-scan.mjs < request.json`. It accepts a
+Base `poolAddress` and optional `strategy`, returning a PASS/WAIT/BLOCKED research
+report with evidence timestamps. The paid offering is hidden pending a hosted
+ACP worker and verified delivery. [Input, output and activation status](docs/MEME_OFFERING.md).
 
 ## Run a local paper session
 
