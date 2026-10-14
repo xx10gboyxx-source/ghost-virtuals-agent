@@ -1,6 +1,6 @@
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {GrokOperator} from '../operator.mjs';
+import {MemeOperator} from '../operator.mjs';
 import {observation,createVirtualsExplainer} from './reporter.mjs';
 
 export const TASKS=Object.freeze({
@@ -82,7 +82,7 @@ export async function runResearchTask({task,status,now=Date.now(),explain=null,t
 
 function fixture(){
   const now=1800000000000;
-  return {now,status:{mode:'simulation',liveOrders:false,enabled:true,sessionUntil:now+60000,lastTick:now,cash:50,realized:0,feesPaid:0,positions:[],orders:[],diagnostics:[{status:'PASS',code:'ELIGIBLE',checkedAt:now}]}};
+  return {now,status:{mode:'simulation',marketKind:'base-meme-spot',chainId:8453,liveOrders:false,enabled:true,sessionUntil:now+60000,lastTick:now,cash:50,realized:0,feesPaid:0,positions:[],orders:[],diagnostics:[{status:'PASS',code:'ELIGIBLE',checkedAt:now}]}};
 }
 export async function evaluateFixtures(){
   const {now,status}=fixture();
@@ -109,12 +109,12 @@ export async function evaluateFixtures(){
 export async function main(args){
   if(args.length===1&&args[0]==='--evaluate')return evaluateFixtures();
   if(args.length===1&&args[0]==='--demo'){
-    const input=fixture();input.status.diagnostics=[{status:'WAIT',code:'STALE_BOOK',checkedAt:input.now}];
+    const input=fixture();input.status.diagnostics=[{status:'WAIT',code:'STALE_MARKET_DATA',checkedAt:input.now}];
     return {kind:'synthetic-offline-task-demo',liveProviderCalls:0,...await runResearchTask({task:'explain-wait',...input})};
   }
   if(args.length!==2||!Object.hasOwn(TASKS,args[0]))throw new Error('Use --demo, --evaluate, or TASK DATABASE_PATH.');
   const explain=createVirtualsExplainer({enabled:process.env.GHOST_ENABLE_INFERENCE==='true',apiKey:process.env.VIRTUALS_API_KEY||'',model:process.env.VIRTUALS_MODEL||'',format:'evidence-json'});
-  const operator=new GrokOperator(args[1]);
+  const operator=new MemeOperator(args[1]);
   try{return await runResearchTask({task:args[0],status:operator.status(),explain});}finally{operator.close();}
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){

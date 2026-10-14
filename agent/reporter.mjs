@@ -7,11 +7,12 @@ const finite = value => Number.isFinite(value) ? value : null;
 // Only explicitly allowed evidence reaches the model. No titles, feed error
 // strings, wallet addresses, credentials, filesystem paths or arbitrary prompts.
 export function observation(status) {
-  if (status?.mode !== 'simulation' || status.liveOrders !== false) {
+  if (status?.mode !== 'simulation' || status.liveOrders !== false || status.marketKind!=='base-meme-spot' || status.chainId!==8453) {
     throw new Error('Only simulation observations can be reported.');
   }
   return {
-    mode: 'simulation', liveOrders: false,
+    mode: 'simulation', liveOrders: false, marketKind:'base-meme-spot', chainId:8453,
+    strategy:['volume-breakout','trend-pullback'].includes(status.strategy)?status.strategy:'UNKNOWN',
     enabled: status.enabled === true,
     sessionUntil: finite(status.sessionUntil), lastTick: finite(status.lastTick),
     simulatedCash: finite(status.cash), simulatedRealized: finite(status.realized),
@@ -19,7 +20,7 @@ export function observation(status) {
     positions: Array.isArray(status.positions) ? status.positions.length : 0,
     orders: (Array.isArray(status.orders) ? status.orders : []).slice(-20).map(order => ({
       action: ['BUY', 'SELL'].includes(order.action) ? order.action : 'UNKNOWN',
-      side: ['YES', 'NO'].includes(order.side) ? order.side : 'UNKNOWN',
+      side: ['SPOT'].includes(order.side) ? order.side : 'UNKNOWN',
       status: code(order.status),
     })),
     checks: (Array.isArray(status.diagnostics) ? status.diagnostics : []).slice(0,20).map(check => ({

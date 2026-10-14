@@ -1,10 +1,10 @@
-import {GrokOperator} from '../operator.mjs';
+import {MemeOperator} from '../operator.mjs';
 import {createVirtualsExplainer,report} from './reporter.mjs';
 
 async function main() {
   const args=process.argv.slice(2);
   if(args.length>1) throw new Error('Use npm run report -- /path/to/simulation.sqlite');
-  const operator = new GrokOperator(args[0] || './state/ghost-grok.sqlite');
+  const operator = new MemeOperator(args[0] || './state/ghost-meme.sqlite');
   try {
     const explain=createVirtualsExplainer({
       enabled:process.env.GHOST_ENABLE_INFERENCE==='true',
