@@ -1,3 +1,5 @@
+> v0.5 adds the separate [live executor](LIVE.md) and [public portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/). Research/ACP evidence below does not establish funded trading results.
+
 # GhOsT v0.4 reviewer guide
 
 GhOsT is a Base meme-coin research and paper-trading agent prototype. Its active
@@ -16,7 +18,7 @@ npm run evaluate
 npm run check:public
 ```
 
-136 automated tests pass, covering feed, strategy, simulation recovery, ACP jobs,
+161 automated tests pass, covering feed, strategy, simulation recovery, ACP jobs,
 readiness, reporting and research tasks. The evaluation has 20 declared synthetic cases. Tests use
 synthetic responses; no live-provider quality or investment performance is measured.
 

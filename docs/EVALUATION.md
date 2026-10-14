@@ -1,6 +1,6 @@
 # Evaluation evidence
 
-Run `npm test` for 136 software tests and `npm run evaluate` for two independent
+Run `npm test` for 161 software tests and `npm run evaluate` for two independent
 10-case synthetic evaluations. `npm run demo` uses synthetic Base token snapshots
 and a temporary SQLite ledger; it performs no model, network or wallet operation.
 

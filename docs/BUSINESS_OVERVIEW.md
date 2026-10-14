@@ -21,6 +21,8 @@ the one-shot research job accepts a caller-supplied pool contract. The output is
 times, metrics and an illustrative price plan when eligible. A passing signal is
 research output, not an instruction or authorization to trade.
 
+Version 0.5 also provides a [public research portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/) and a [user-run live execution adapter](LIVE.md) for canonical Base Uniswap v3 USDC/WETH pools. Users configure their own host and wallet. Real approvals, swaps, receipt accounting and exits are implemented; funded mainnet performance is not established.
+
 ## Customers and collaboration
 
 | Audience | Proposed use | Next validation |
@@ -41,8 +43,7 @@ are verified. This is planned pricing, not evidence of sales or sustainable marg
 
 The first commercial milestone is a working research service. Its economics need
 measurement: completed-job latency, provider availability, failure resolution,
-hosting cost per job and optional inference cost. Any future subscription,
-licensing or execution product is exploratory, not a current offer.
+hosting cost per job and optional inference cost. Any paid subscription or licensing offer remains exploratory. The live runner source is available now.
 
 ## Evidence available today
 
@@ -51,12 +52,11 @@ licensing or execution product is exploratory, not a current offer.
   no deposit, API key or inference credits are required.
 - A persistent ACP worker with request validation, duplicate protection, deadline
   checks and recovery records; its external CLI contract is documented.
-- 136 automated tests and 20 declared synthetic evaluation cases. These establish
+- 161 automated tests and 20 declared synthetic evaluation cases. These establish
   tested software behavior, not profitability or production reliability.
 - One bounded live-market probe and a local restart/outage check. The probe did
   not produce an eligible entry and does not establish broad data coverage.
-- Public source, review commands and a funding-readiness command that currently
-  reports BLOCKED. See [the review guide](REVIEW_GUIDE.md) and
+- Public source, review commands and a read-only live wallet/pool check. See [the review guide](REVIEW_GUIDE.md) and
   [readiness audit](READINESS.md).
 
 No customer adoption, operating revenue, sponsorship, inference-credit approval,
@@ -71,12 +71,12 @@ represented as marketplace activity.
 | Hosted research pilot | Authenticated ACP delivery, settlement, restart and outage tests on the intended host | Pending |
 | Forward research evaluation | Timestamped pool observations, costs, rejected setups and simulation outcomes | Pending |
 | Commercial validation | Real user feedback, completed jobs and measured service costs | Pending |
-| Constrained live execution | Reviewed signer policy, bounded transactions, confirmed fills, reconciliation and real exits | Not implemented |
+| Constrained live execution | Reviewed signer policy, bounded transactions, confirmed fills, reconciliation and real exits | Implemented; funded deployment verification pending |
 
 Development support would target hosting/integration work, data validation and
 independent security review. No funding amount, valuation, ownership terms or
 delivery date is implied. Adding funds does not complete these milestones or
-enable trading.
+start a user-run live process.
 
 ## Boundaries and contact
 

@@ -1,37 +1,21 @@
 # GhOsT development roadmap
 
-The first launch is a Base meme research service. Live execution is a separate,
-unimplemented milestone. Funding, a public profile or a passing software test
-does not activate trading.
+Version 0.5 provides public live-feed research and a user-run Base Uniswap v3 live
+executor. See [LIVE.md](LIVE.md) for the supported routes, commands and limits.
 
-## Implemented and locally tested
+Implemented: two closed-five-minute meme strategies, public data/security adapters,
+persistent simulation and reporting, a hosted research portal, exact ERC20 approvals,
+real swap signing, receipt/balance reconciliation and durable live exit monitoring.
 
-A continuous no-money research runner with automatic token-pool discovery,
-restart recovery and saved strategy reports (`npm start`). Selected Base pool
-screening, two closed-candle strategies, bounded public data
-adapters, persistent simulation, risk controls, evidence-linked research reports,
-a persistent ACP research worker and a read-only funding-readiness check.
+Next validation work:
 
-One bounded live-market probe and local restart/outage check have been recorded.
-They do not establish ongoing coverage or production reliability.
+1. Exercise a full route on a Base fork and an owner-run funded deployment, recording
+   real receipts, balances, recovery outcomes and measured gas.
+2. Collect forward strategy evidence and rejected setups without presenting synthetic
+   results as returns.
+3. Validate authenticated ACP research-job delivery, settlement and restart behavior
+   before publishing that paid job.
+4. Measure public portal provider capacity, user feedback and operating costs.
 
-## Next acceptance gates
-
-1. **Hosted research delivery:** verify Node 24, persistent storage, process
-   supervision and official CLI authentication on the selected host. Complete a
-   controlled ACP job, settlement and restart/outage test before exposing the job.
-2. **Forward research evidence:** observe explicitly selected Base pools, record
-   provider freshness and gaps, and collect simulation results with modeled costs.
-   Preserve rejected setups; do not weaken screening to create activity.
-3. **User and service economics:** obtain real pilot feedback and measure delivery
-   latency, failure resolution and cost per completed job before revising pricing.
-4. **Inference evaluation:** measure real Virtuals-model evidence fidelity,
-   uncertainty, latency and credit consumption. AI remains explanation-only.
-5. **Live execution design and review:** constrain assets, capital, permissions,
-   routers, approvals, price impact and fees. Persist transaction identity before
-   broadcast, reconcile confirmed fills and balances, and manage real exits
-   through restarts and ambiguous outcomes. Validate the whole path before use.
-
-No completion dates, investment returns or credit approval are promised. See
-[READINESS.md](READINESS.md) for current gaps and
-[BUSINESS_OVERVIEW.md](BUSINESS_OVERVIEW.md) for partnership opportunities.
+The live runner does not require completion of the ACP milestones to operate.
+No profitability, funding, sponsorship or completion date is claimed.

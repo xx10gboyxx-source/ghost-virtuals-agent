@@ -1,12 +1,12 @@
 # Run GhOsT without money
 
-Node.js 24 or newer is the only software requirement. There are no package
-dependencies to install. No wallet, signer, API key, inference credits or deposit
+Use Node.js 24 or newer and install the pinned dependencies with `npm ci --ignore-scripts`. No wallet, signer, API key, inference credits or deposit
 is used by this runner. Public market data requires internet access.
 
 ```sh
 git clone https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git
 cd ghost-virtuals-agent
+npm ci --ignore-scripts
 npm start
 ```
 
@@ -109,6 +109,6 @@ may restart the same command/path on failure; never delete the database or run
 by the code, and this repository does not provision one.
 
 The ACP customer-job worker and optional inference explanations are separate.
-`npm run readiness` checks future real-money execution prerequisites; its BLOCKED
+`npm run readiness` checks the separate ACP deployment; its BLOCKED
 result does not prevent this no-money runtime from working. No live transactions
 are made by any command in this guide.
