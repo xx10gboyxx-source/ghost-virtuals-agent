@@ -20,9 +20,10 @@ hosted delivery/settlement remain unverified and its offering stays hidden.
 - [Public source](https://github.com/xx10gboyxx-source/ghost-virtuals-agent) and
   [Virtuals project](https://app.virtuals.io/virtuals/143409).
 - [Reviewer guide](REVIEW_GUIDE.md) with installation and offline reproduction commands.
-- [Evaluation record](EVALUATION.md): 136 automated tests and 20 synthetic
-  evaluation cases reproduced from the public checkout. The published suite does
-  not exercise the live executor; it is not funded-execution or profitability evidence.
+- [Evaluation record](EVALUATION.md): 218 automated tests, including 82 live execution
+  tests, and 20 synthetic evaluation cases reproduced from the public checkout.
+  Live tests use real signing/SQLite with deterministic RPC fixtures; funded-execution
+  and profitability evidence remain absent. Full fork execution is still unverified.
 - [Operating guide](OPERATING.md), [live guide](LIVE.md),
   [deployment status](READINESS.md) and [business overview](BUSINESS_OVERVIEW.md).
 

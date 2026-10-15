@@ -9,9 +9,10 @@ real swap signing, receipt/balance reconciliation and durable live exit monitori
 
 Next validation work:
 
-1. Publish reproducible live-executor tests and obtain independent signer/recovery
-   security review; these are not established by the current research/simulation suite.
-2. Exercise a full route on a Base fork and a separately authorized owner-run funded deployment, recording
+1. Extend the published live-executor tests for the [remaining execution gaps](LIVE_EXECUTION_TESTS.md#remaining-execution-gaps)
+   and obtain independent signer/recovery security review.
+2. Resolve the fork environment's missing L1 receipt fees without weakening production
+   reconciliation, then exercise a full route on a Base fork and a separately authorized owner-run funded deployment, recording
    real receipts, balances, recovery outcomes and measured gas.
 3. Collect forward strategy evidence and rejected setups without presenting synthetic
    results as returns.

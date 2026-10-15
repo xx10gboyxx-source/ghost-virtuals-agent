@@ -26,10 +26,11 @@ npm run check:public
 npm run check:docs
 ```
 
-The public checkout reproduces 136 automated tests and 20 synthetic evaluation
-cases. The earlier larger count and descriptions of live-executor tests are not
-supported by the published test files. No test currently imports `live/`; do not
-interpret the passing suite as a test of signing, real swaps or live recovery.
+The public checkout reproduces 218 automated tests, including 82 live execution
+tests, and 20 synthetic evaluation cases. The live tests use real viem signing and
+SQLite with deterministic RPC fixtures; they do not establish actual EVM execution
+or funded reliability. The earlier baseline had a total of 136 cases and no live
+imports. The Base-fork attempt remains failed/unverified due to missing L1 receipt fees.
 See [EVALUATION.md](EVALUATION.md) for the evidence boundary and remaining work.
 
 | Capability | Implementation | Reproducible evidence or gap |
@@ -42,8 +43,8 @@ See [EVALUATION.md](EVALUATION.md) for the evidence boundary and remaining work.
 | BTC ledger isolation | `MemeOperator` constructor | Legacy-ledger rejection test; historical outcome-contract files are inactive |
 | Evidence-linked research / optional inference | `agent/task.mjs` + `agent/reporter.mjs` | Citation, freshness, immutability and synthetic HTTP tests; real model quality unverified |
 | ACP research worker | `agent/acp-cli.mjs` + `agent/acp-worker.mjs` | Simulated CLI lifecycle tests; hosted authenticated delivery unverified |
-| Live signing and bounded swaps | `live/base-broker.mjs` | Implementation available for inspection; no published automated live tests |
-| Live positions, receipts, exits and recovery | `live/agent.mjs` + `live/run.mjs` | Implementation available for inspection; funded/fork operation unverified |
+| Live signing and bounded swaps | `live/base-broker.mjs` | 60 broker cases with real signing/encoding and deterministic RPC fixtures |
+| Live positions, receipts, exits and recovery | `live/agent.mjs` | 22 agent cases with real broker and SQLite; funded/full fork operation unverified |
 | Public research portal | Separate published service | Public interface available; no sustained-uptime, customer or execution evidence |
 
 ## Interpret signals and execution correctly

@@ -11,8 +11,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - run: npm test
+      - run: npm ci --ignore-scripts
+      - name: All tests, including live broker and SQLite recovery
+        shell: bash
+        run: node --test --test-reporter=tap tests/*.test.mjs | tee "$RUNNER_TEMP/ghost-tests.tap"
       - run: npm run evaluate
       - run: npm run check:public
-      - run: npm run check:docs
+      - run: npm run check:docs -- --tap "$RUNNER_TEMP/ghost-tests.tap"
       - run: node examples/demo.mjs > /tmp/ghost-demo.json
+      - name: Preserve reproducible test output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deterministic-test-evidence
+          path: ${{ runner.temp }}/ghost-tests.tap

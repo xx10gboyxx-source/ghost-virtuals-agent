@@ -78,7 +78,7 @@
   "fundingReadyScope": "staged ACP deployment only; not a user wallet assessment",
   "liveProviderValidatedScope": "optional inference quality; bounded market-feed observations have separate scope",
   "publicPortalScope": "hosted research and setup guidance; no customer wallet custody or hosted trading",
-  "liveExecutorTestCoverage": "no live-executor tests in the published suite",
+  "liveExecutorTestCoverage": "82 live execution tests within 218 automated tests; real viem signing and SQLite with deterministic RPC fixtures",
   "forkExecutionVerified": false,
   "publicDescriptions": "docs/PUBLIC_DESCRIPTIONS.md"
 }

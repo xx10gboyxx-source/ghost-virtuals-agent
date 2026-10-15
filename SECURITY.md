@@ -15,8 +15,9 @@ do not share its nonce with another program.
 
 Exact approvals, route validation, slippage limits, durable transaction hashes and
 reconciliation checks are implemented controls, not an independent security audit.
-The published suite has no live-executor tests, and funded mainnet or fork-based
-end-to-end operation has not been verified. Provider failures, compromised hosts,
+The published suite includes 82 live execution tests with deterministic RPC fixtures
+and real signing/SQLite. Funded mainnet and fork-based end-to-end operation remain
+unverified; the fork stops on missing L1 fee evidence. Provider failures, compromised hosts,
 token behavior, gaps and MEV can cause losses; monitored exits require a running
 host, usable data, RPC access and gas and cannot guarantee execution or cap loss.
 

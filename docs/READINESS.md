@@ -17,10 +17,12 @@ and never activates or blocks this live runner.
 | Capability | Release evidence |
 | --- | --- |
 | Public live-feed research | Published research interface; HTML reachability checked, sustained service behavior unverified |
-| Two meme strategies and simulation | 136 automated tests and 20 synthetic evaluation cases |
-| Live signing and receipt reconciliation | Implemented in `live/base-broker.mjs`; no published automated live tests |
-| Persisted live positions, exits and recovery | Implemented in `live/agent.mjs`; live lifecycle tests absent from published suite |
-| Funded mainnet or fork trading | Not verified in this release |
+| Complete automated suite | 218 automated tests, including 82 live execution tests, plus 20 synthetic evaluation cases |
+| Two meme strategies and simulation | Research, screening, simulation and recovery cases remain in the complete suite |
+| Live signing and receipt reconciliation | 60 broker cases with real viem signing/encoding and deterministic RPC fixtures |
+| Persisted live positions, exits and recovery | 22 agent cases with the real broker and SQLite journal |
+| Base-fork end-to-end trading | Failed/unverified: Anvil approval receipt omits required `l1Fee`; broker returns `L1_FEE_UNKNOWN` |
+| Funded mainnet trading | Not verified in this release |
 | Hosted unattended customer trading | Not deployed; users run their own Node24 host |
 | Authenticated ACP job delivery/settlement | Separate worker remains unverified and offering hidden |
 

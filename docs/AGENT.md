@@ -30,8 +30,9 @@ path cannot place real orders.
 It implements canonical Base Uniswap v3 route checks, exact ERC20 approvals,
 bounded real swaps, receipt/balance reconciliation and monitored exits. Pools must
 quote the selected token in USDC or WETH; simulation balances are never imported.
-Only explicitly running the configured live commands can submit swaps. The code
-is present, but the published automated suite does not exercise this executor.
+Only explicitly running the configured live commands can submit swaps. The suite
+includes 82 live execution tests using real signing and SQLite with deterministic
+RPC fixtures; full fork and funded operation remain unverified.
 See [LIVE.md](LIVE.md) for commands, limits and unresolved-transaction handling.
 
 ## Explanations and ACP research jobs

@@ -1,6 +1,6 @@
 # GhOsT v0.5 public descriptions
 
-Copy prepared for review on 2026-10-14. Repository About settings and external
+Copy reconciled with execution-test evidence on 2026-10-15. Repository About settings and external
 Virtuals project/job descriptions are not changed by merging a documentation PR.
 Apply the matching text separately after review; do not mark the ACP offering
 active until its delivery and settlement checks are complete.
@@ -24,8 +24,10 @@ hosted live-feed research and setup guidance.
 For users running their own wallet and host, the separate live executor implements
 real ERC20 approvals, swaps, receipt accounting and monitored exits in canonical
 Base Uniswap v3 pools quoted in USDC or WETH. Funded mainnet and fork-based
-end-to-end operation remain unverified; the published suite has no live-executor
-tests. Hosted unattended customer trading is not deployed or verified. Token
+end-to-end operation remain unverified. The complete suite has 218 automated tests,
+including 82 live execution tests with deterministic RPC fixtures and real
+signing/SQLite. The fork attempt stops on missing L1 receipt fees. Hosted unattended
+customer trading is not deployed or verified. Token
 screening and execution controls cannot guarantee sellability, fills or returns.
 
 GhOsT is seeking research feedback, design partners and infrastructure/security

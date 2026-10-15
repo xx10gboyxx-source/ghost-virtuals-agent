@@ -1,0 +1,27 @@
+name: Zero-funds Base fork integration
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  fork:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - name: Install pinned local EVM (no install scripts)
+        run: npm install --prefix "$RUNNER_TEMP/foundry" --ignore-scripts --no-audit --no-fund @foundry-rs/anvil-linux-amd64@1.7.1
+      - name: Execute against pinned Base state through read-only upstream proxy
+        shell: bash
+        env:
+          ANVIL_BIN: ${{ runner.temp }}/foundry/node_modules/.bin/anvil
+        run: npm run test:base-fork 2>&1 | tee "$RUNNER_TEMP/base-fork.txt"
+      - name: Preserve success or failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: base-fork-evidence
+          path: ${{ runner.temp }}/base-fork.txt

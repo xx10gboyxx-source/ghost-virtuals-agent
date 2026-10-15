@@ -1,0 +1,27 @@
+{"stage":"BUY APPROVE","receipt":"success","reconciliation":"UNKNOWN","code":"L1_FEE_UNKNOWN"}
+{
+  "status": "FAILED_OR_UNVERIFIED",
+  "anvil": "anvil Version: 1.7.1",
+  "block": "35000000",
+  "blockHash": "0x9048f68cfd29ae6ce36647ace74ebdf5bffcef8528dd8183df6e3a01a92f2d18",
+  "message": "Fork reconciliation failed: L1_FEE_UNKNOWN. Do not weaken production fee/balance checks to pass this test.\n+ actual - expected\n\n+ 'UNKNOWN'\n- 'CONFIRMED'\n",
+  "results": [
+    {
+      "side": "BUY",
+      "kind": "APPROVE",
+      "hash": "0x11bad26f8cd4e85b4330d40df0aac0527d3c4eca4748a6623484c63b1082a29a",
+      "receiptStatus": "success",
+      "rawReceiptHasL1Fee": false,
+      "reconciliation": {
+        "status": "UNKNOWN",
+        "hash": "0x11bad26f8cd4e85b4330d40df0aac0527d3c4eca4748a6623484c63b1082a29a",
+        "code": "L1_FEE_UNKNOWN"
+      }
+    }
+  ],
+  "upstreamMethods": [
+    "eth_chainId",
+    "eth_getBlockByNumber"
+  ],
+  "mainnetTransactions": 0
+}

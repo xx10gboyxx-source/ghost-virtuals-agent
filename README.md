@@ -106,11 +106,12 @@ npm run check:public
 npm run check:docs
 ```
 
-The current checkout reproduces **136 automated tests** and **20 synthetic evaluation cases** (10 agent
-reporting cases and 10 meme-market screening cases). These test software behavior,
-not investment performance. No tests in the published suite exercise `live/`;
-the earlier larger test count and live-test descriptions are not reproducible
-from this checkout. The offline demo follows a synthetic token entry and exit;
+The current checkout reproduces **218 automated tests**, including **82 live execution tests**,
+and **20 synthetic evaluation cases** (10 agent reporting cases and 10 meme-market
+screening cases). Live cases use real viem signing/encoding and SQLite with
+deterministic RPC fixtures. These test software behavior, not funded execution or
+investment performance. The Base-fork attempt remains failed/unverified because
+Anvil omits required L1 receipt fees. The offline demo follows a synthetic token entry and exit;
 all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).
 
 ## Meme-scan job definition

@@ -155,6 +155,7 @@ export class BaseSwapBroker{
   const tx=await this.validate(p);await this.chain();if(this.now()>=p.deadline*1000)fail('DEADLINE_EXPIRED');
   const [l1,operator,native,mapped,latest,pending]=await Promise.all([this.read(BASE_ADDRESSES.gasOracle,GAS_ORACLE_ABI,'getL1Fee',[serializeTransaction({...tx,r:undefined,s:undefined,v:undefined,yParity:undefined})]),this.read(BASE_ADDRESSES.gasOracle,GAS_ORACLE_ABI,'getOperatorFee',[tx.gas]),this.publicClient.getBalance({address:this.address}),this.read(BASE_ADDRESSES.factory,FACTORY_ABI,'getPool',[p.token0,p.token1,p.fee]),...['latest','pending'].map(blockTag=>this.publicClient.getTransactionCount({address:this.address,blockTag}))]);
   if(!same(mapped,p.poolAddress))fail('POOL_UNSUPPORTED');
+  integer(latest,0,Number.MAX_SAFE_INTEGER,'NONCE_INVALID');integer(pending,0,Number.MAX_SAFE_INTEGER,'NONCE_INVALID');
   if(latest!==p.nonce||pending<p.nonce||pending>p.nonce+1)fail('NONCE_BUSY');
   if(pending===p.nonce+1){
    const known=await this.publicClient.getTransaction({hash:p.hash});
@@ -166,8 +167,15 @@ export class BaseSwapBroker{
  }catch(e){throw redacted(e);}}
  async reconcile(p){try{
   const signed=await this.validate(p);await this.chain();let receipt;
-  try{receipt=await this.publicClient.getTransactionReceipt({hash:p.hash});}catch(e){if(e?.name==='TransactionReceiptNotFoundError')return {status:'PENDING',hash:p.hash};throw e;}
-  if(!receipt)return {status:'PENDING',hash:p.hash};
+  try{receipt=await this.publicClient.getTransactionReceipt({hash:p.hash});}catch(e){if(e?.name!=='TransactionReceiptNotFoundError')throw e;}
+  if(!receipt){
+   // A different transaction may have consumed this nonce. Never infer a fill,
+   // cancellation or free reservation from a missing receipt or replacement.
+   const nonce=await this.publicClient.getTransactionCount({address:this.address,blockTag:'latest'});
+   integer(nonce,0,Number.MAX_SAFE_INTEGER,'NONCE_INVALID');if(nonce>p.nonce)fail('NONCE_CONSUMED');
+   if(nonce<p.nonce)fail('NONCE_INVALID');
+   return {status:'PENDING',hash:p.hash};
+  }
   if(!same(receipt.transactionHash,p.hash)||!same(receipt.from,this.address)||!same(receipt.to,p.to)||typeof receipt.blockNumber!=='bigint'||!Array.isArray(receipt.logs))fail('RECEIPT_IDENTITY_MISMATCH');
   if(safeBig(receipt.gasUsed)===0n||receipt.gasUsed>signed.gas||safeBig(receipt.effectiveGasPrice)>signed.maxFeePerGas)fail('RECEIPT_INVALID');
   const latest=await this.publicClient.getBlockNumber();if(typeof latest!=='bigint'||latest<receipt.blockNumber)fail('RECEIPT_INVALID');
@@ -177,8 +185,9 @@ export class BaseSwapBroker{
   if(typeof receipt.l1Fee!=='bigint'||receipt.l1Fee<0n)fail('L1_FEE_UNKNOWN');
   const gasWei=safeBig(receipt.gasUsed)*safeBig(receipt.effectiveGasPrice)+receipt.l1Fee+safeBig(operatorFee);
   const result={kind:p.kind,hash:p.hash,gasWei:gasWei.toString(),blockNumber:receipt.blockNumber.toString(),blockHash:receipt.blockHash};
-  if(receipt.status==='reverted')return {...result,status:'REVERTED',amountIn:'0',amountOut:'0'};
-  if(receipt.status!=='success')fail('RECEIPT_INVALID');
+  const reverted=receipt.status==='reverted';
+  if(!reverted&&receipt.status!=='success')fail('RECEIPT_INVALID');
+  if(reverted&&receipt.logs.length)fail('RECEIPT_INVALID');
   let used=0n,out=0n;
   const ownLogs=receipt.logs.filter(log=>same(log.address,p.tokenIn)||same(log.address,p.tokenOut));
   const transfers=[],approvals=[];
@@ -189,7 +198,11 @@ export class BaseSwapBroker{
   }
   const b=receipt.blockNumber,[tokenAfter,quoteAfter,nativeAfter,allowanceAfter,nonceAfter]=await Promise.all([this.read(p.tokenAddress,ERC20_ABI,'balanceOf',[this.address],b),this.read(p.quoteToken,ERC20_ABI,'balanceOf',[this.address],b),this.publicClient.getBalance({address:this.address,blockNumber:b}),this.read(p.tokenIn,ERC20_ABI,'allowance',[this.address,BASE_ADDRESSES.router],b),this.publicClient.getTransactionCount({address:this.address,blockNumber:b})]);
   if(nonceAfter!==p.nonce+1)fail('EXTERNAL_ACCOUNT_ACTIVITY');
-  if(p.kind==='SWAP'){
+  if(reverted){
+   // A revert consumes gas and nonce, but must not alter ERC20 balances or
+   // allowance. It needs the same canonical wallet checks as a successful fill.
+   if(safeBig(allowanceAfter)!==amount(p.allowanceBefore,{zero:true}))fail('APPROVAL_EVENT_MISMATCH');
+  }else if(p.kind==='SWAP'){
    if(transfers.length!==2)fail('TRANSFER_MISMATCH');
    const sent=transfers.filter(e=>same(e.address,p.tokenIn)&&same(e.from,this.address)&&same(e.to,p.poolAddress)),received=transfers.filter(e=>same(e.address,p.tokenOut)&&same(e.from,p.poolAddress)&&same(e.to,this.address));
    if(sent.length!==1||received.length!==1)fail('TRANSFER_MISMATCH');used=sent[0].value;out=received[0].value;
@@ -205,6 +218,6 @@ export class BaseSwapBroker{
   const expectedToken=p.kind!=='SWAP'?beforeToken:p.side==='BUY'?beforeToken+out:beforeToken-used,expectedQuote=p.kind!=='SWAP'?beforeQuote:p.side==='BUY'?beforeQuote-used:beforeQuote+out;
   if(safeBig(tokenAfter)!==expectedToken||safeBig(quoteAfter)!==expectedQuote||amount(p.beforeBalances.native,{zero:true})-safeBig(nativeAfter)!==gasWei)fail('BALANCE_RECONCILIATION_MISMATCH');
   const canonical=await this.publicClient.getBlock({blockNumber:b});if(!same(canonical.hash,receipt.blockHash))fail('REORG_DETECTED');
-  return {...result,status:'CONFIRMED',amountIn:used.toString(),amountOut:out.toString()};
+  return {...result,status:reverted?'REVERTED':'CONFIRMED',amountIn:used.toString(),amountOut:out.toString()};
  }catch(e){return {status:'UNKNOWN',hash:typeof p?.hash==='string'?p.hash:null,code:redacted(e).code};}}
 }

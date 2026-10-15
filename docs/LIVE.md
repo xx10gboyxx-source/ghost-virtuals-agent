@@ -10,8 +10,8 @@ research scans. The live runner runs on your own Node.js 24 computer/server. The
 is no hosted customer trading account, wallet custody or automatic Virtuals wallet
 connection. No operator approval service or inference credit is needed by the runner.
 Funded mainnet and fork-based end-to-end operation have not been verified. The
-published automated suite does not exercise this live executor; implemented
-transaction functionality is not evidence of execution reliability or returns.
+complete suite includes 82 live execution tests using deterministic RPC fixtures
+and real signing/SQLite; these do not establish funded reliability or returns.
 
 ## Install and configure
 
@@ -158,13 +158,13 @@ within validated bounds. High costs or missing data can produce no trade.
   stop, the real position remains visible, and `retry-exit` is an explicit recovery
   command after the cause is addressed. Existing loss locks remain in force.
 
-The implementation uses viem transaction encoding/signing and a persistent SQLite
-journal. **The public test suite does not include live-executor tests.** Earlier
-descriptions of deterministic live RPC/signature and live restart tests cannot be
-reproduced from this checkout. See [EVALUATION.md](EVALUATION.md).
-
-**No funded mainnet trade or fork-based end-to-end trade has been verified for
-this release.** No performance or return is established. Deployment, supervision,
+Dedicated live tests now use real viem transaction encoding/signatures with
+deterministic RPC fixtures and real SQLite restart tests. The
+[execution verification report](LIVE_EXECUTION_TESTS.md) maps coverage, reproduced
+defects and remaining gaps. A pinned zero-funds Base fork reached a successful local
+approval but stopped at `L1_FEE_UNKNOWN` because Anvil omitted the receipt fee field.
+**No funded mainnet trade or complete fork-based end-to-end trade has been verified.**
+No performance or return is established. Deployment, supervision,
 private-key protection and wallet configuration remain with each user. Stops
 require the process, data providers and RPC to remain usable; source availability
 does not supply an always-on host or a managed trading service.

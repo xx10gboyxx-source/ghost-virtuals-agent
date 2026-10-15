@@ -45,9 +45,49 @@ function checkLocalLink(path, target) {
   }
 }
 
-const evidence = JSON.parse(read('evidence/docs-review.json'));
-const evidenceCount = evidence.tests.passed;
-if (!Number.isSafeInteger(evidenceCount) || evidenceCount <= 0) fail('evidence/docs-review.json: no recorded test count');
+// The docs-only report is historical. Execution evidence includes the newer
+// complete suite and its dedicated live subset; do not overwrite that baseline.
+const evidence = JSON.parse(read('evidence/live-execution-verification.json'));
+const complete = evidence.verification.find(result => result.command === 'npm test');
+const live = evidence.verification.find(result => result.command === 'npm run test:live');
+for (const [name, result] of [['complete', complete], ['live', live]]) {
+  if (!Number.isSafeInteger(result?.total) || result.total <= 0 || result.passed !== result.total ||
+      result.failed !== 0 || result.skipped !== 0 || result.exitCode !== 0) fail(`execution evidence: invalid ${name} test result`);
+}
+const evidenceCount = complete?.total;
+const liveCount = live?.total;
+if (liveCount > evidenceCount) fail('execution evidence: live subset exceeds complete suite');
+
+// CI supplies the TAP file from the same run so recorded claims cannot silently
+// outlive removed, failing or skipped tests. Standalone checks remain offline.
+const args = process.argv.slice(2);
+if (args.length) {
+  if (args.length !== 2 || args[0] !== '--tap') fail('Usage: check-docs.mjs [--tap <complete-suite.tap>]');
+  else {
+    try {
+      const tap = readFileSync(args[1], 'utf8');
+      for (const [key, expected] of [['tests', evidenceCount], ['pass', evidenceCount], ['fail', 0], ['skipped', 0], ['cancelled', 0], ['todo', 0]]) {
+        const values = [...tap.matchAll(new RegExp(`^# ${key} (\\d+)$`, 'gm'))];
+        if (values.length !== 1 || Number(values[0][1]) !== expected) fail(`TAP ${key}: expected ${expected}`);
+      }
+    } catch { fail('Cannot read complete-suite TAP evidence'); }
+  }
+}
+
+const liveClaims = [
+  /no (?:published )?(?:automated )?live(?:-executor)? tests/i,
+  /(?:suite|checkout) (?:does not|doesn't) (?:include|exercise) (?:this |the )?(?:live(?:-executor| executor)?|executor)/i,
+  /no tests? (?:currently |in the published suite )?(?:imports?|exercise)[^\n]*live\//i,
+  /live lifecycle tests absent/i,
+];
+function checkCounts(path, prose) {
+  for (const [, count, scope] of prose.matchAll(/\b(\d+)\s+(?:passing\s+)?(?:(live execution|automated|software)\s+)?tests\b/g)) {
+    const expected = scope === 'live execution' ? liveCount : evidenceCount;
+    if (Number(count) !== expected) fail(`${path}: claimed ${scope ?? 'complete'} test count ${count} differs from recorded ${expected}`);
+  }
+}
+checkCounts('agent-card.json', card.liveExecutorTestCoverage ?? '');
+if (liveClaims.some(pattern => pattern.test(card.liveExecutorTestCoverage ?? ''))) fail('agent-card.json: superseded live-test denial');
 let linkCount = 0;
 const docs = markdownFiles('.');
 for (const path of docs) {
@@ -59,9 +99,9 @@ for (const path of docs) {
   for (const [, version] of labels) {
     if (version !== release) fail(`${path}: stale release framing v${version} (expected v${release})`);
   }
-  for (const [, count] of prose.matchAll(/\b(\d+) (?:passing )?(?:(?:automated|software) )?tests\b/g)) {
-    if (Number(count) !== evidenceCount) fail(`${path}: claimed test count ${count} differs from recorded ${evidenceCount}`);
-  }
+  checkCounts(path, prose);
+  if (liveClaims.some(pattern => pattern.test(prose.replace(/\s+/g, ' ')))) fail(`${path}: superseded live-test denial`);
+  if (/^(?:<{7}|={7}|>{7})(?: |$)/m.test(text)) fail(`${path}: unresolved merge conflict`);
   for (const [, target] of text.matchAll(/\[[^\]\n]*\]\(([^\s)]+)\)/g)) {
     checkLocalLink(path, target);
     linkCount++;

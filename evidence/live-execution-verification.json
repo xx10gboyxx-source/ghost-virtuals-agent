@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-14",
+  "baseCommit": "75a0ddf98c9abfef639689d511570319ec060b9e",
+  "node": "v24.19.0",
+  "viem": "2.57.7",
+  "baseline": {
+    "suitePassed": 136,
+    "brokerRegressionCases": 60,
+    "regressionPassed": 53,
+    "regressionFailed": 7,
+    "regressionExitCode": 1
+  },
+  "verification": [
+    {
+      "command": "npm run test:live",
+      "total": 82,
+      "passed": 82,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0
+    },
+    {
+      "command": "npm test",
+      "total": 218,
+      "passed": 218,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0
+    },
+    {
+      "command": "npm run evaluate",
+      "syntheticCases": 20,
+      "passed": 20,
+      "exitCode": 0
+    },
+    {
+      "command": "npm run check:public",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run demo",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "fork": {
+    "command": "ANVIL_BIN=/tmp/ghost-foundry/node_modules/.bin/anvil node scripts/test-base-fork.mjs",
+    "anvil": "1.7.1",
+    "block": "35000000",
+    "blockHash": "0x9048f68cfd29ae6ce36647ace74ebdf5bffcef8528dd8183df6e3a01a92f2d18",
+    "status": "FAILED_OR_UNVERIFIED",
+    "exitCode": 1,
+    "lastStage": "BUY APPROVE",
+    "localApprovalReceiptStatus": "success",
+    "rawReceiptHasL1Fee": false,
+    "brokerStatus": "UNKNOWN",
+    "brokerCode": "L1_FEE_UNKNOWN",
+    "fullBuySellVerified": false,
+    "mainnetTransactions": 0
+  },
+  "sourceSha256": {
+    "live/base-broker.mjs": "71aa642d0ca87f4504b49ef343fd62a973ff6059a638aff7262193394ea73528",
+    "live/agent.mjs": "11e6c23f331eaf554fcce96565d9d3196cba9c6a8aa1a979b286028e4f39c76b",
+    "tests/live-broker.test.mjs": "67e07f839c5a5c0929b1875670ae2561bd4a5359a60f5055e24c9234b4a9021f",
+    "tests/live-agent.test.mjs": "cd52090ea0f50c1a5b63d1165cb757322ff13606f445ee1e79b5ade66f10ce6b",
+    "tests/helpers/base-rpc.mjs": "31e7713cee5df1d6b4aaf71c43b19c138dff99576cb4abbd9f2dee2e9483f64d",
+    "scripts/test-base-fork.mjs": "413c769f4a8d9875f394a501e056dc534ee15ae0c2fee2855c07116b2a72ff2d"
+  },
+  "limitationsDocument": "docs/LIVE_EXECUTION_TESTS.md",
+  "fundedMainnetVerified": false,
+  "independentSecurityAudit": false
+}

@@ -1,0 +1,135 @@
+{
+  "reviewDate": "2026-10-15",
+  "scope": "Combined documentation and Base execution/recovery contributions; offline verification only.",
+  "baselineCommit": "75a0ddf98c9abfef639689d511570319ec060b9e",
+  "contributions": {
+    "documentation": "75565c125e2487dbeaa60278a175aec8ec13dfe1",
+    "execution": "8688c199bc73dc9c090abee89d61edad621dd4b8"
+  },
+  "node": "v24.19.0",
+  "viem": "2.57.7",
+  "completeSuite": {
+    "command": "node --test --test-reporter=tap tests/*.test.mjs",
+    "exitCode": 0,
+    "tests": 218,
+    "pass": 218,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "liveSubset": {
+    "command": "node --test --test-reporter=tap tests/live-*.test.mjs",
+    "exitCode": 0,
+    "tests": 82,
+    "pass": 82,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "syntheticEvaluations": {
+    "command": "npm run evaluate",
+    "passed": 20,
+    "failed": 0,
+    "liveProviderCalls": 0,
+    "exitCode": 0
+  },
+  "demos": [
+    {
+      "command": "npm run demo",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run runtime:demo",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run agent:demo",
+      "exitCode": 0
+    }
+  ],
+  "historicalEvidencePreserved": [
+    "evidence/docs-review.json",
+    "evidence/live-execution-verification.json",
+    "evidence/base-fork-investigation.txt"
+  ],
+  "fork": {
+    "status": "FAILED_OR_UNVERIFIED",
+    "rerunDuringIntegration": false,
+    "reason": "Prior pinned Anvil 1.7.1 approval receipt omits l1Fee; production broker rejects it with UNKNOWN / L1_FEE_UNKNOWN. No fee values or confirmations substituted.",
+    "source": "evidence/base-fork-investigation.txt",
+    "fullBuySellVerified": false
+  },
+  "boundaries": {
+    "fundedMainnetVerified": false,
+    "tradingActivated": false,
+    "personalWalletConnected": false,
+    "mainnetTransactions": 0,
+    "redistributionPermissionsChanged": false,
+    "independentSecurityAudit": false
+  },
+  "checks": [
+    {
+      "command": "npm run check:docs -- --tap /tmp/ghost-integration-evidence/complete.tap",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run check:public",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "sourceSha256": {
+    "live/base-broker.mjs": "71aa642d0ca87f4504b49ef343fd62a973ff6059a638aff7262193394ea73528",
+    "live/agent.mjs": "11e6c23f331eaf554fcce96565d9d3196cba9c6a8aa1a979b286028e4f39c76b",
+    "live/config.mjs": "ae34f24ea9efa93358119ee85941fff56258e95fdcb8922470313a915516a668",
+    "live/run.mjs": "4559d0dca484b9fecba1b26478bdff1d5f28ed2740f566791b39624b01faa30a",
+    "server/meme-strategy.mjs": "178e3042b935cb6c5a9d05cbd97b341a0670401421f5b25cc48107464822613c",
+    "NOTICE": "902b0954d04acb58e89616cca7eee57bd189bb70d3cb84c0faae0da8b59af059",
+    "package.json": "4506a679749fabc5d81aa25bc807d703b6524cfa90f6c5426310f0ad71ddc8ab",
+    "package-lock.json": "c8fd1fbff3433cc2a171b774f47d3a4ee32fcbff93969171ab92899410bbcd9a",
+    "scripts/check-docs.mjs": "830e7e43c9425d0168cd489d8faf053a66ebd780dc8dd98aa575feb533f13ed3",
+    ".github/workflows/verify.yml": "c3a6d0a57905c10e511584602ad09090e42c43be8f38613916f03e3a4d8cbc1d"
+  },
+  "documentationNegativeChecks": [
+    {
+      "case": "claimed automated test count 136",
+      "exitCode": 1,
+      "expectedFailure": true
+    },
+    {
+      "case": "claimed live execution test count 81",
+      "exitCode": 1,
+      "expectedFailure": true
+    },
+    {
+      "case": "superseded live-test denial",
+      "exitCode": 1,
+      "expectedFailure": true
+    },
+    {
+      "case": "unresolved merge conflict",
+      "exitCode": 1,
+      "expectedFailure": true
+    },
+    {
+      "case": "Original PR #1 README is rejected after execution integration",
+      "exitCode": 1,
+      "expectedFailure": true
+    },
+    {
+      "case": "skipped tests",
+      "exitCode": 1,
+      "expectedFailure": true
+    },
+    {
+      "case": "incomplete output",
+      "exitCode": 1,
+      "expectedFailure": true
+    }
+  ]
+}

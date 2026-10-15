@@ -23,6 +23,8 @@
   ],
   "scripts": {
     "test": "node --test tests/*.test.mjs",
+    "test:live": "node --test tests/live-*.test.mjs",
+    "test:base-fork": "node scripts/test-base-fork.mjs",
     "demo": "node examples/demo.mjs",
     "status": "node operator.mjs status",
     "report": "node agent/cli.mjs",

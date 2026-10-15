@@ -66,9 +66,11 @@ hosting cost per job and optional inference cost. Any paid subscription or licen
   no deposit, API key or inference credits are required.
 - A persistent ACP worker with request validation, duplicate protection, deadline
   checks and recovery records; its external CLI contract is documented.
-- 136 automated tests and 20 synthetic evaluation cases reproduced from the public
-  checkout. They cover research/simulation and ACP fixtures, not the live executor,
-  investment performance or production reliability. [Evidence scope](EVALUATION.md).
+- 218 automated tests, including 82 live execution tests, and 20 synthetic evaluation
+  cases reproduced from the public checkout. Coverage includes research/simulation,
+  ACP fixtures, real signing and SQLite recovery with deterministic RPC responses.
+  It does not establish funded execution, investment performance or production
+  reliability. [Evidence scope](EVALUATION.md).
 - One bounded live-market probe and a local restart/outage check. The probe did
   not produce an eligible entry and does not establish broad data coverage.
 - Public source, review commands and an implemented read-only live wallet/pool
@@ -88,7 +90,7 @@ represented as marketplace activity.
 | Hosted ACP research pilot | Authenticated ACP delivery, settlement, restart and outage tests on the intended host | Pending; offering hidden |
 | Forward research evaluation | Timestamped pool observations, costs, rejected setups and simulation outcomes | Pending |
 | Commercial validation | Real user feedback, completed jobs and measured service costs | Pending |
-| User-run live execution | Source implements signer policy, bounded transactions, reconciliation and exits | Implemented; published live tests, independent security review, fork and funded verification pending |
+| User-run live execution | Source implements signer policy, bounded transactions, reconciliation and exits | Offline live tests pass; independent security review, complete fork and funded verification pending |
 | Unattended hosted customer trading | Customer isolation, credential protection, recovery, supervision and measured reliability | Not deployed or verified |
 
 Development support would target hosting/integration work, data validation and
