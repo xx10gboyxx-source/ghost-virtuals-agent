@@ -10,6 +10,12 @@ offering is hidden. The meme scan is also hidden while no hosted ACP worker is
 available. Its configured price remains $0.01 with a 10-minute SLA and no principal
 funds required; this is staged configuration, not a live service or billing claim.
 
+This offering is research only. GhOsT v0.5 separately provides a
+[hosted research portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/) and
+an implemented [user-run live executor](LIVE.md). The executor requires its own
+configured wallet and running host; it is not included in an ACP scan job.
+Funded mainnet operation remains unverified.
+
 ## Marketplace description
 
 Research a caller-selected Base meme-coin pool using closed 5-minute candles,
@@ -18,7 +24,8 @@ a structured JSON report with PASS/WAIT/BLOCKED, reasons, observation timestamps
 pool/token identity and an illustrative setup when eligible. Designed for
 traders, research teams and agent workflows. Requires a full Base pool contract
 address; no trading funds or wallet access requested. Research only: no swaps,
-custody or guaranteed returns. Pilot staged; hosted delivery is not yet active.
+custody or guaranteed returns. ACP pilot staged; authenticated ACP delivery is
+not yet verified and the offering remains hidden.
 
 ## Runnable research command
 

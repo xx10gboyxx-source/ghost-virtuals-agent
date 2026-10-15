@@ -17,6 +17,7 @@ jobs:
         run: node --test --test-reporter=tap tests/*.test.mjs | tee "$RUNNER_TEMP/ghost-tests.tap"
       - run: npm run evaluate
       - run: npm run check:public
+      - run: npm run check:docs -- --tap "$RUNNER_TEMP/ghost-tests.tap"
       - run: node examples/demo.mjs > /tmp/ghost-demo.json
       - name: Preserve reproducible test output
         if: always()

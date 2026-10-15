@@ -39,6 +39,7 @@ npm run test:live
 npm test
 npm run evaluate
 npm run check:public
+npm run check:docs
 git diff --check
 ```
 
@@ -115,8 +116,10 @@ field was injected, and no unresolved transaction was booked as confirmed.
   Automatic fee replacement, cancellation or releasing a nonce based on absence
   alone is not implemented. No such recovery was added by this change.
 
-The open documentation PR #1 remains separate work. When combining changes, retain
-its capability corrections and use this newer evidence for live-test status/counts.
+The documentation and execution contributions are reconciled in this checkout.
+The original documentation review remains historical baseline evidence; current
+public claims use the complete suite and dedicated live coverage described here.
+Fresh combined verification is recorded in [integration-verification.json](../evidence/integration-verification.json).
 
 References: [Uniswap Base deployments](https://developers.uniswap.org/docs/protocols/v3/deployments/v3-base-deployments),
 [Foundry fork testing](https://www.getfoundry.sh/guides/fork-testing).

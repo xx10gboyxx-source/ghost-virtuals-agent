@@ -32,6 +32,7 @@
     "agent:demo": "node agent/task.mjs --demo",
     "evaluate": "node agent/task.mjs --evaluate && node examples/evaluate-meme.mjs",
     "check:public": "node scripts/check-public.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
     "readiness": "node scripts/readiness.mjs",
     "start": "node agent/run.mjs run",
     "agent:once": "node agent/run.mjs once",

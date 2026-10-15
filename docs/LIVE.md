@@ -9,6 +9,9 @@ The public [GhOsT portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/)
 research scans. The live runner runs on your own Node.js 24 computer/server. There
 is no hosted customer trading account, wallet custody or automatic Virtuals wallet
 connection. No operator approval service or inference credit is needed by the runner.
+Funded mainnet and fork-based end-to-end operation have not been verified. The
+complete suite includes 82 live execution tests using deterministic RPC fixtures
+and real signing/SQLite; these do not establish funded reliability or returns.
 
 ## Install and configure
 
@@ -16,10 +19,27 @@ connection. No operator approval service or inference credit is needed by the ru
 git clone https://github.com/xx10gboyxx-source/ghost-virtuals-agent.git
 cd ghost-virtuals-agent
 npm ci --ignore-scripts
-cp examples/live-config.example.json live-config.json
 ```
 
-Edit the three `REPLACE_...` values in `live-config.json`:
+Create `live-config.json` locally with the following content. This file is ignored
+by Git; it contains configuration only, never a signing key. The earlier command
+referencing `examples/live-config.example.json` pointed to a file absent from the
+public checkout.
+
+```json
+{
+  "mode": "live",
+  "chainId": 8453,
+  "walletAddress": "REPLACE_WITH_YOUR_BASE_WALLET_ADDRESS",
+  "tokenAddress": "REPLACE_WITH_THE_BASE_TOKEN_ADDRESS",
+  "poolAddress": "REPLACE_WITH_THE_BASE_UNISWAP_V3_POOL_ADDRESS",
+  "strategy": "volume-breakout"
+}
+```
+
+Replace the three `REPLACE_...` values before running a command. Omitted monetary,
+gas and session settings use the defaults described below. `strategy` may instead
+be `trend-pullback`.
 
 - `walletAddress`: the dedicated Base wallet you control.
 - `tokenAddress`: the exact meme-token contract, on the feed's base-token side.
@@ -42,8 +62,10 @@ export GHOST_BASE_RPC_URL='https://mainnet.base.org'
 npm run live -- check ./live-config.json
 ```
 
-`check` is read-only: it verifies fresh public data, on-chain pool identity, balances
-and the strategy decision. It needs only the wallet's public address. `funded: true`
+`check` is read-only with respect to the wallet/network: it verifies fresh public
+data, on-chain pool identity, balances and the strategy decision, without signing
+or submitting transactions. It creates/opens the local journal and binds its
+configuration. It needs only the wallet's public address. `funded: true`
 means the wallet currently has the configured quote capital and six transaction gas
 reserves; it does not mean a strategy entry exists. WAIT/BLOCKED are ordinary results.
 
@@ -142,7 +164,9 @@ deterministic RPC fixtures and real SQLite restart tests. The
 defects and remaining gaps. A pinned zero-funds Base fork reached a successful local
 approval but stopped at `L1_FEE_UNKNOWN` because Anvil omitted the receipt fee field.
 **No funded mainnet trade or complete fork-based end-to-end trade has been verified.**
-No performance or return is established. Deployment and actual wallet configuration
-remain with each user.
+No performance or return is established. Deployment, supervision,
+private-key protection and wallet configuration remain with each user. Stops
+require the process, data providers and RPC to remain usable; source availability
+does not supply an always-on host or a managed trading service.
 
 Official contract reference: [Uniswap Base v3 deployments](https://developers.uniswap.org/docs/protocols/v3/deployments/v3-base-deployments).

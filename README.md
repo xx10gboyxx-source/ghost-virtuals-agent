@@ -9,9 +9,15 @@ Base tokens, explains why a setup passes or fails, and models strategy behavior
 using simulated capital or the separately configured live executor.
 
 **v0.5: [Open the public portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/) · [Run with real assets](docs/LIVE.md).**
-The live runner signs real Base Uniswap v3 USDC/WETH swaps from a user-configured wallet, monitors exits and recovers pending transactions. The portal provides live-feed research and setup instructions; users host their own trading process. No funded mainnet execution has been verified for this release.
+The live runner implements real swaps for selected meme tokens in canonical Base
+Uniswap v3 pools quoted in USDC or WETH, with exit monitoring and transaction
+recovery. The portal provides hosted live-feed research and setup instructions;
+live trading requires a separately configured wallet and a running user-managed
+host. No funded mainnet or fork-based end-to-end execution has been verified for
+this release. Hosted unattended customer trading is not deployed or verified.
 
-**Run GhOsT without money, a wallet, API keys or inference credits.** The research runner includes a continuous research runner with automatic pool discovery, both meme
+**Run GhOsT without money, a wallet, API keys or inference credits.** The continuous
+research runner includes automatic pool discovery, both meme
 strategies, saved reports and persistent simulated positions.
 
 ```sh
@@ -55,7 +61,7 @@ simulation entry window ends. [Run and control GhOsT](docs/OPERATING.md).
 - **Live execution:** canonical Base v3 pool verification, exact approvals, bounded swaps,
   durable transaction hashes, receipt/balance reconciliation and real position exits.
   Each user configures and runs their own wallet/host. [Setup](docs/LIVE.md).
-- **Paper execution:** later-quote entries and exits, cost-aware sizing, persisted
+- **Simulation:** later-quote entries and exits, cost-aware sizing, persisted
   SQLite state, stop/target logic, session deadline and loss locks.
 - **Research reports:** bounded `explain-wait` and `session-review` tasks with
   evidence IDs and optional read-only Virtuals Compute explanations.
@@ -68,8 +74,9 @@ contracts. The default watchlist does not discover unrelated tokens.
 ## Current status
 
 **The no-money research and simulation runtime is implemented and tested.** It
-runs on a computer or server with Node.js 24 and persistent storage. This repository
-does not itself keep that computer online or deploy a hosted service. The ACP
+runs on a computer or server with Node.js 24 and persistent storage. Cloning this
+repository does not provision or keep a host online. The public portal is a separate
+hosted research interface, not a host for a user's trading process. The ACP
 customer-job worker is separate and remains staged. Live swaps are implemented in
 `live/`; use the explicit [live commands](docs/LIVE.md), not `npm start`, to trade.
 Use `npm run agent:status` for local state and `npm run agent:reports` for saved
@@ -96,12 +103,16 @@ npm run runtime:demo
 npm run agent:demo
 npm run evaluate
 npm run check:public
+npm run check:docs
 ```
 
-The current suite has **161 tests** and **20 synthetic evaluation cases** (10 agent
-reporting cases and 10 meme-market screening cases). These test software behavior,
-not investment performance. The offline demo follows a synthetic token entry and
-exit; all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).
+The current checkout reproduces **218 automated tests**, including **82 live execution tests**,
+and **20 synthetic evaluation cases** (10 agent reporting cases and 10 meme-market
+screening cases). Live cases use real viem signing/encoding and SQLite with
+deterministic RPC fixtures. These test software behavior, not funded execution or
+investment performance. The Base-fork attempt remains failed/unverified because
+Anvil omits required L1 receipt fees. The offline demo follows a synthetic token entry and exit;
+all costs and results are simulated. [Evaluation details](docs/EVALUATION.md).
 
 ## Meme-scan job definition
 
@@ -161,8 +172,10 @@ Quote timestamps describe retrieval, not an independently authenticated trade.
 Security reports may be incomplete, wrong or stale; screening cannot guarantee
 sellability or prevent rug pulls. Holder concentration includes reported LP/burn
 addresses conservatively. A missing required flag returns WAIT. Actual liquidity,
-route-level price impact, MEV, market manipulation and wallet reconciliation are
-not modeled reliably. This version requires conventional 20-byte pool addresses.
+route-level price impact, MEV and market manipulation are not reliably modeled
+by simulation. The separate live adapter implements quote bounds and receipt/wallet
+reconciliation; these do not establish funded execution reliability or protection
+against all losses. This version requires conventional 20-byte pool addresses.
 
 AI is disabled by default. Optional Virtuals inference can explain sanitized
 recorded evidence but cannot change orders, budgets or permissions. Model text
@@ -174,6 +187,8 @@ We are seeking design partners for research workflows, traders for forward
 simulation feedback, and infrastructure or strategic partners to help validate
 hosted delivery. The [business overview](docs/BUSINESS_OVERVIEW.md) describes
 the proposed service, staged pricing and measurable development milestones.
+The [public descriptions](docs/PUBLIC_DESCRIPTIONS.md) provide consistent project
+and marketplace copy for review.
 Contact [@PulseLayerAI](https://x.com/PulseLayerAI) or use public Issues for
 non-sensitive technical discussion. Investment discussions concern an early
 software project; there is no published investment offer, validated trading

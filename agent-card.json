@@ -73,5 +73,12 @@
   "liveReadinessCommand": "npm run live -- check ./live-config.json",
   "publicPortal": "https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/",
   "fundedMainnetExecutionVerified": false,
-  "hostedCustomerTrading": false
+  "hostedCustomerTrading": false,
+  "liveOrdersScope": "default research/simulation runtime only; the separate live executor can submit real orders",
+  "fundingReadyScope": "staged ACP deployment only; not a user wallet assessment",
+  "liveProviderValidatedScope": "optional inference quality; bounded market-feed observations have separate scope",
+  "publicPortalScope": "hosted research and setup guidance; no customer wallet custody or hosted trading",
+  "liveExecutorTestCoverage": "82 live execution tests within 218 automated tests; real viem signing and SQLite with deterministic RPC fixtures",
+  "forkExecutionVerified": false,
+  "publicDescriptions": "docs/PUBLIC_DESCRIPTIONS.md"
 }

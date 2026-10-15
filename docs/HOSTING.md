@@ -1,16 +1,23 @@
 # GhOsT host evidence and legacy launch checklist
 
-**For the current v0.4 no-money runner, use `npm start` and
+**For the current v0.5 no-money runner, use `npm start` and
 [OPERATING.md](OPERATING.md).** The steps below record the earlier low-level
 operator integration checks. Funding and inference credits are not required
 for the current local research/simulation runtime.
+
+The [public portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/) now provides
+hosted research. This historical host check is not a current project-wide claim
+that nothing is deployed. The separate [live executor](LIVE.md) is implemented,
+but users must configure their own wallet, Node.js 24 host and persistent disk.
+Funded mainnet execution remains unverified; unattended hosted customer trading
+is not deployed. Authenticated ACP delivery is a separate unresolved deployment.
 
 The repository does not provision a server. A successful feed check is not a
 running hosted agent, and a running Virtuals template is not proof that this
 repository's worker is installed. No wallet, signer or compute API key is needed
 for the deterministic simulation below.
 
-## Verified on 2026-10-14
+## Historical observations on 2026-10-14
 
 - The live GeckoTerminal pool and OHLCV endpoints and GoPlus token-security
   endpoint returned HTTP 200 for the TOSHI/WETH pool below.
