@@ -11,15 +11,19 @@ use Base Sepolia settlement without changing the market being researched.
 Local verification covers a complete simulated request, fee proposal, funding
 notification, real strategy evaluation and JSON delivery through a child-process
 CLI fixture. These are **not authenticated ACP jobs or marketplace activity**.
-No hosted instance, signer installation, real escrow settlement or real delivery
+No hosted ACP worker, ACP signer installation, real escrow settlement or real delivery
 has been verified. Keep the offering hidden until a controlled integration test
 and host restart test pass.
+
+This ACP status does not describe the separate [hosted research portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/)
+or the implemented [user-run live executor](LIVE.md). Neither portal availability
+nor a live swap establishes ACP job delivery or settlement.
 
 On 2026-10-14 the Virtuals Console payment review showed monthly hosting of
 **20 USDC** per month. No payment
 was made. Console runtime compatibility (Node 24, persistent disk, native CLI
 keychain and supervision) still needs verification on an actual instance.
-Inference credits do not establish that hosting or job delivery is active.
+Inference credits do not establish that ACP hosting or job delivery is active.
 
 ## Released interface
 

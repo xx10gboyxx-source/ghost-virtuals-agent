@@ -1,5 +1,10 @@
 # Run GhOsT without money
 
+This is the v0.5 local research/simulation guide. The [public portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/)
+offers hosted research. Real-asset execution uses the separate [live guide](LIVE.md)
+and a separately configured wallet and running host; it is never enabled by
+funding a wallet or by using the commands below.
+
 Use Node.js 24 or newer and install the pinned dependencies with `npm ci --ignore-scripts`. No wallet, signer, API key, inference credits or deposit
 is used by this runner. Public market data requires internet access.
 
@@ -91,6 +96,7 @@ npm test
 npm run runtime:demo
 npm run evaluate
 npm run check:public
+npm run check:docs
 ```
 
 The offline demonstration verifies software behavior using synthetic observations;

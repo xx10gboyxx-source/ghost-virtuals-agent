@@ -2,7 +2,7 @@
 
 **Research the token. Explain the risk. Test the strategy.**
 
-GhOsT is an early software project building explainable Base meme-coin research
+GhOsT v0.5 is an early software project building explainable Base meme-coin research
 for traders, research teams and autonomous-agent workflows. It combines market
 structure, volume and token-security evidence into a bounded, timestamped report.
 Its purpose is to make screening decisions easier to inspect and reproduce.
@@ -21,7 +21,20 @@ the one-shot research job accepts a caller-supplied pool contract. The output is
 times, metrics and an illustrative price plan when eligible. A passing signal is
 research output, not an instruction or authorization to trade.
 
-Version 0.5 also provides a [public research portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/) and a [user-run live execution adapter](LIVE.md) for canonical Base Uniswap v3 USDC/WETH pools. Users configure their own host and wallet. Real approvals, swaps, receipt accounting and exits are implemented; funded mainnet performance is not established.
+Version 0.5 also provides a [public research portal](https://ghost-base-meme-agent-dz39ls.v2.appdeploy.ai/)
+and a [user-run live execution adapter](LIVE.md) for selected meme tokens in
+canonical Base Uniswap v3 pools quoted in USDC or WETH. Real approvals, swaps,
+receipt accounting and exits are implemented. Live trading requires a separately
+configured wallet and running user-managed host. Funded mainnet and fork-based
+end-to-end operation have not been verified; hosted unattended customer trading
+is not deployed or verified.
+
+| Product surface | Available now | Operating boundary |
+| --- | --- | --- |
+| Public portal | Hosted live-feed research and setup guidance | No customer wallet custody or hosted trade execution |
+| Local research runner | Both strategies, automatic pool discovery, saved reports and simulated trades | Node.js 24 host and persistent disk; no funds or credits needed |
+| Live executor | Real transaction construction/signing, approvals, swaps, accounting and monitored exits | User-configured wallet, RPC, gas and running host; funded reliability unverified |
+| ACP research offering | Scanner and persistent job-worker source | Hidden pending authenticated hosted delivery and settlement validation |
 
 ## Customers and collaboration
 
@@ -41,7 +54,8 @@ job**, with a **10-minute delivery window** and **no trading principal requested
 The offering remains hidden until a hosted worker and real authenticated delivery
 are verified. This is planned pricing, not evidence of sales or sustainable margins.
 
-The first commercial milestone is a working research service. Its economics need
+The next commercial milestone is a validated ACP research-service pilot, separate
+from the already published research portal. Its economics need
 measurement: completed-job latency, provider availability, failure resolution,
 hosting cost per job and optional inference cost. Any paid subscription or licensing offer remains exploratory. The live runner source is available now.
 
@@ -52,11 +66,13 @@ hosting cost per job and optional inference cost. Any paid subscription or licen
   no deposit, API key or inference credits are required.
 - A persistent ACP worker with request validation, duplicate protection, deadline
   checks and recovery records; its external CLI contract is documented.
-- 161 automated tests and 20 declared synthetic evaluation cases. These establish
-  tested software behavior, not profitability or production reliability.
+- 136 automated tests and 20 synthetic evaluation cases reproduced from the public
+  checkout. They cover research/simulation and ACP fixtures, not the live executor,
+  investment performance or production reliability. [Evidence scope](EVALUATION.md).
 - One bounded live-market probe and a local restart/outage check. The probe did
   not produce an eligible entry and does not establish broad data coverage.
-- Public source, review commands and a read-only live wallet/pool check. See [the review guide](REVIEW_GUIDE.md) and
+- Public source, review commands and an implemented read-only live wallet/pool
+  check; no funded trade follows from the existence of that command. See [the review guide](REVIEW_GUIDE.md) and
   [readiness audit](READINESS.md).
 
 No customer adoption, operating revenue, sponsorship, inference-credit approval,
@@ -68,10 +84,12 @@ represented as marketplace activity.
 | Milestone | Acceptance evidence | Status |
 | --- | --- | --- |
 | Reproducible research core | Scanner, strategy, recovery and reporting checks | Implemented and locally tested |
-| Hosted research pilot | Authenticated ACP delivery, settlement, restart and outage tests on the intended host | Pending |
+| Public research portal | Published interface; capacity, uptime and provider behavior require measurement | Published; sustained service validation pending |
+| Hosted ACP research pilot | Authenticated ACP delivery, settlement, restart and outage tests on the intended host | Pending; offering hidden |
 | Forward research evaluation | Timestamped pool observations, costs, rejected setups and simulation outcomes | Pending |
 | Commercial validation | Real user feedback, completed jobs and measured service costs | Pending |
-| Constrained live execution | Reviewed signer policy, bounded transactions, confirmed fills, reconciliation and real exits | Implemented; funded deployment verification pending |
+| User-run live execution | Source implements signer policy, bounded transactions, reconciliation and exits | Implemented; published live tests, independent security review, fork and funded verification pending |
+| Unattended hosted customer trading | Customer isolation, credential protection, recovery, supervision and measured reliability | Not deployed or verified |
 
 Development support would target hosting/integration work, data validation and
 independent security review. No funding amount, valuation, ownership terms or
@@ -81,8 +99,11 @@ start a user-run live process.
 ## Boundaries and contact
 
 Screening cannot guarantee sellability or prevent rug pulls. Data may be stale or
-incomplete, and simulated costs do not establish executable prices. Live swaps,
-real exits and unattended production operation are not available. Optional AI
+incomplete, and simulated costs do not establish executable prices. Live swaps and
+real exits are implemented in the separate user-run adapter; monitored exits need
+a running host, usable data, RPC access and gas and cannot guarantee execution.
+Local signing keys and journals must be protected by the operator. No independent
+security audit or funded execution reliability is established. Optional AI
 explanations have no order authority; no xAI Grok integration is claimed.
 
 The GHOST project token is distinct from the research software. This overview
